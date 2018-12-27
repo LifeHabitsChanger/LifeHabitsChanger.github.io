@@ -50,13 +50,35 @@ d3.csv("fake_data2.csv", add_total, (error, data) => {
   svg.append("g").selectAll("g")
     .data(layers)
     .enter().append("g")
-    .style("fill", function(d) { return z(d.key); })
+      .style("fill", function(d) { return z(d.key); })
     .selectAll("rect")
     .data(function(d) { return d; })
     .enter().append("rect")
-    .attr("x", function(d) { return x(d.data.serie); })
-    .attr("y", function(d) { return y(d[1]); })
-    .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-    .attr("width", x.bandwidth());
+      .attr("x", function(d) { return x(d.data.serie); })
+      .attr("y", function(d) { return y(d[1]); })
+      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+      .attr("width", x.bandwidth())
+    .on("mouseover", function() { tooltip.style("display", null); })
+    .on("mouseout", function() { tooltip.style("display", "none"); })
+    .on("mousemove", function(d) {
+      let xPosition = d3.mouse(this)[0] + 30;
+      let yPosition = d3.mouse(this)[1] - 30;
+      tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
+      let txt = `${d[1] - d[0]} kg CO2 / an`;
+      tooltip.select("text").text(txt);
+    });
+
+  // Prep the tooltip bits, initial display is hidden
+  const tooltip = svg.append("g")
+    .attr("class", "tooltip")
+    .style("display", "none");
+
+  tooltip.append("text")
+    .attr("x", 30)
+    .attr("dy", "1.2em")
+    .style("text-anchor", "middle")
+    .attr("font-size", "18px")
+    .attr("font-weight", "bold")
+    .style("pointer-events", "none");
 
 });
