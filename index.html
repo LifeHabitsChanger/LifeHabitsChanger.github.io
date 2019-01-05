@@ -2,9 +2,26 @@
 <head>
     <meta charset="utf-8">
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+
+    <svg id="chart"></svg>
+
+    <form id="form">
+        <input type="range" id="boeuf" name="boeuf" min="0" max="10" value="0">
+        <span id="boeuf-valeur">0</span>
+        <label for="boeuf">Conso boeuf (kg/semaine)</label>
+
+        <input type="range" id="porc" name="porc" min="0" max="10" value="0">
+        <span id="porc-valeur">0</span>
+        <label for="porc">Conso porc (kg/semaine)</label>
+
+        <input type="checkbox" id="fusionner" name="fusionner">
+        <label for="fusionner">Fusionner categories</label>
+    </form>
+
     <!-- TODO: Mettre un DOMContentLoaded et deplacer dans le header -->
     <script src="script.js"></script>
 
