@@ -1,0 +1,26 @@
+Catégorie,Type,Élément,Conso francais moyen,Coeff,Source
+Alimentaire,Valeur,Beaucoup de viande,,3.3,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Moyen,,2.5,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Sans boeuf,,1.9,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Végétarien,,1.7,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Végan,,1.5,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Coeff,Manger local,,0.9,https://ourworld.unu.edu/en/uncovering-the-carbon-footprint-of-everything
+Transports,Valeur,Train,1540,0.028,https://www.consoglobe.com/les-14-modes-de-transport-les-moins-polluants-cg
+Transports,Valeur,Voiture,11119,0.131,https://www.consoglobe.com/les-14-modes-de-transport-les-moins-polluants-cg
+Transports,Valeur,Bus,1226,0.130,https://www.consoglobe.com/les-14-modes-de-transport-les-moins-polluants-cg
+Transports,Valeur,2 roue,188,0.117,https://www.consoglobe.com/les-14-modes-de-transport-les-moins-polluants-cg
+Transports,Valeur,Avion,209,0.131,http://www.statistiques.developpement-durable.gouv.fr/fileadmin/documents/Produits_editoriaux/Publications/Datalab/2018/datalab-31-chiffres-cles-transport-mars2018.pdf
+Énergie,Coeff,kwH To CO2 France,,0.09,https://www.greenit.fr/2009/04/24/combien-de-co2-degage-un-1-kwh-electrique/
+Énergie,Coeff,kwH To CO2 Europe,,0.44,https://www.greenit.fr/2009/04/24/combien-de-co2-degage-un-1-kwh-electrique/
+Énergie,Valeur,Habitant dans le foyer,"2,31",,
+Énergie,Valeur,Surface du foyer,91,,
+Énergie,Formule,Chauffage électrique,4723,110 * surface / nbHabitant,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,Formule,Eau chaude,872,800,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,Formule,Electroménager,519,1100 / nbHabitant,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,A,,0.73,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,B,,0.82,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,C,,0.91,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,D,,1,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,E,,1.09,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,F,,1.18,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
+Énergie,CoeffClasse,G,,1.27,https://selectra.info/energie/guides/conso/consommation-moyenne-electricite/tout-electrique
