@@ -1,5 +1,3 @@
-let $boeufValeur = $('#boeuf-valeur');
-
 const margin = {top: 20, right: 20, bottom: 70, left: 40};
 const width = 920 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
@@ -9,6 +7,8 @@ const svg = d3.select("#chart")
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
+
+const $fusionner = $("#fusionner");
 
 d3.csv("fake_data2.csv", (error, orig_data) => {
   if (error) throw error;
@@ -23,7 +23,10 @@ d3.csv("fake_data2.csv", (error, orig_data) => {
     .rangeRound([0, width])
     .paddingInner(0.05)
     .align(0.1)
-    .domain(data.map(function(d) { return d.serie; }));
+    .domain(data.map( (d) => d.serie ));
+
+  const xAxis = d3.axisBottom()
+    .scale(x);
 
   const z = d3.scaleOrdinal()
     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
@@ -33,14 +36,18 @@ d3.csv("fake_data2.csv", (error, orig_data) => {
 
   handleSlider('boeuf');
   handleSlider('porc');
+  handleSlider('train');
+  handleSlider('voiture');
+  handleSlider('bus');
+  handleSlider('2roues');
+  handleSlider('avion');
 
-  $('#fusionner').on('change', function () {
-    update();
-  });
+
+  $fusionner.on('change', () => update() );
 
   function update () {
     let data;
-    if ($('#fusionner').is(':checked')) {
+    if ($fusionner.is(':checked')) {
       keys = keysMerged;
       data = processDataMerge(orig_data);
     } else {
@@ -71,37 +78,54 @@ d3.csv("fake_data2.csv", (error, orig_data) => {
 
     // Compute the Y Axis
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return d.total; })])
+      .domain([0, d3.max(data, (d) => d.total )])
       .rangeRound([height, 0])
       .nice();
+
+    const yAxis = d3.axisLeft()
+      .scale(y);
 
     // Create the layers
     const layers = d3.stack().keys(keys)(data);
 
     // Create new graphics
-    const g = svg.append("g").selectAll("g").data(layers);
+    const g = svg.append("g")
+      .attr("transform", "translate(100, 0)")
+      .selectAll("g")
+      .data(layers);
     const bars = g.enter().append("g")
-      .style("fill", function(d) { return z(d.key); })
+      .style("fill", (d) => z(d.key) )
       .selectAll("rect");
 
     bars
-      .data(function(d) { return d; })
+      .data( (d) => d )
       .enter().append("rect")
-        .attr("x", function(d) { return x(d.data.serie); })
-        .attr("y", function(d) { return y(d[1]); })
-        .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+        .attr("x", (d) => x(d.data.serie) )
+        .attr("y", (d) => y(d[1]) )
+        .attr("height", (d) => (y(d[0]) - y(d[1])) )
         .attr("width", x.bandwidth())
-        .on("mouseover", function() { tooltip.style("display", null); })
-        .on("mouseout", function() { tooltip.style("display", "none"); })
+        // .attr("data-legend", function (d) { return d3.select(this.parentNode).datum().key; })
+        .on("mouseover", () => { tooltip.style("display", null); })
+        .on("mouseout", () => { tooltip.style("display", "none"); })
         .on("mousemove", function(d) {
+          let key = d3.select(this.parentNode).datum().key;
           let xPosition = d3.mouse(this)[0] + 30;
           let yPosition = d3.mouse(this)[1] - 30;
           tooltip.attr("transform", `translate(${xPosition}, ${yPosition})`);
-          let txt = `${d[1] - d[0]} kg CO2 / an`;
+          let txt = `${key} : ${d[1] - d[0]} kg CO2 / an`;
           tooltip.select("text").text(txt);
         });
 
     // FIXME: label dans les rect
+
+/*    g.append('g')
+      .attr('class', 'x axis')
+      .attr('transform', `translate(0, ${height})`)
+      .call(xAxis);
+
+    g.append('g')
+      .attr('class', 'y axis')
+      .call(yAxis);*/
 
     // Prep the tooltip bits, initial display is hidden
     const tooltip = svg.append("g")
@@ -115,6 +139,30 @@ d3.csv("fake_data2.csv", (error, orig_data) => {
       .attr("font-size", "18px")
       .attr("font-weight", "bold")
       .style("pointer-events", "none");
+
+    const legend = svg.append('g')
+      .attr('class', 'legend')
+      .attr('transform', "translate(12, 0)");
+
+    legend.selectAll('rect')
+      .data(keys)
+      .enter()
+      .append('rect')
+      .attr('x', 0)
+      .attr('y', (d, i) => i * 18 )
+      .attr('width', 12)
+      .attr('height', 12)
+      .attr('fill', (d, i) => z(i) );
+
+    legend.selectAll('text')
+      .data(keys)
+      .enter()
+      .append('text')
+      .text( (d) => d )
+      .attr('x', 18)
+      .attr('y', (d, i) => i * 18 )
+      .attr('text-anchor', 'start')
+      .attr('alignment-baseline', 'hanging');
 
     return bars;
   }
