@@ -33,7 +33,10 @@ let orig_data = [
     "voiture": "11119",
     "bus": "1226",
     "2roues": "188",
-    "avion": "209"
+    "avion": "209",
+    "chauffage": "1.09",
+    "electromenager": "1.09",
+    "chauffageEau": "1.09"
   },
   {
     "serie": "moi",
@@ -50,7 +53,10 @@ let orig_data = [
     "voiture": "11119",
     "bus": "1226",
     "2roues": "188",
-    "avion": "209"
+    "avion": "209",
+    "chauffage": "1.09",
+    "electromenager": "1.09",
+    "chauffageEau": "1.09"
   }];
 
 // TODO utiliser coeffs
@@ -125,6 +131,10 @@ const z = d3.scaleOrdinal()
 const $fusionner = $("#fusionner");
 $fusionner.on('change', () => update() );
 keysNotMerged.forEach( (key) => handleSlider(key) );
+
+handleSlider("nbHabitant");
+handleSlider("surface");
+
 
 // Liste déroulante pour l'alimentaire
 const $alim = $("#alimentaire");
@@ -217,7 +227,14 @@ function handleSlider(sliderName) {
   $span.text(orig_data[1][sliderName]);
 
   let $slider = $(`#${sliderName}`);
-  $slider.val(orig_data[1][sliderName]);
+
+  if (sliderName === "nbHabitant") {
+    $slider.val(2.31);
+  } else if (sliderName === "surface") {
+    $slider.val(91);
+  } else {
+    $slider.val(orig_data[1][sliderName]);
+  }
 
   $slider.on('input', function () {
     let newValue = $(this).val();
@@ -392,9 +409,9 @@ function mapRawToCO2(value, column) {
     "Huile, margarine": (val) => val * 1000,
     "En-cas, sucre": (val) => val * 1000,
     "Boisson": (val) => val * 1000,
-    "classeChauffage":  (val) => val,
-    "classeElectromenager":  (val) => val,
-    "classeChauffageEau":  (val) => val
+    "chauffage":  (val) => val,
+    "electromenager":  (val) => val,
+    "chauffageEau":  (val) => val
   };
   return fcts[column](value);
 }
