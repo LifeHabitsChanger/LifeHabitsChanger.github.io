@@ -1,0 +1,6 @@
+.threshold {
+    fill: none;
+    stroke: red;
+    stroke-width: 1px;
+    stroke-dasharray: 5 5;
+}

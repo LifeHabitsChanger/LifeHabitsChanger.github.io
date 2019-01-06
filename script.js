@@ -1,191 +1,251 @@
+// Dimensions of the SVG
 const margin = {top: 20, right: 20, bottom: 70, left: 40};
-const width = 920 - margin.left - margin.right;
+const width = 1200 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
 
+
+// Get the SVG
 const svg = d3.select("#chart")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
   .append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+
+// Raw data (e.g. with kilometers or kilograms)
+// This data is not to be displayed (need processing first)
+// We will change this data using the form
+let orig_data = [
+  {
+    "serie": "moyenne",
+    "porc": "1",
+    "boeuf": "3",
+    "train": "1540",
+    "voiture": "11119",
+    "bus": "1226",
+    "2roues": "188",
+    "avion": "209"
+  },
+  {
+    "serie": "moi",
+    "porc": "2",
+    "boeuf": "1",
+    "train": "500",
+    "voiture": "20000",
+    "bus": "0",
+    "2roues": "0",
+    "avion": "1000"
+  }
+];
+orig_data.columns = Object.keys(orig_data[0]);
+
+
+// Transform the data (raw value => kg of CO2 / year)
+let data = processData(orig_data);
+
+
+// We have 2 representations, so we retain the 2 sets of keys
+const keysNotMerged = data.columns.slice(1);
+const keysMerged = ['alimentaire', 'transport'];
+let keys = keysNotMerged;
+
+
+// X Domain, Scale and Axis
+const xDomain = data.map( (d) => d.serie );
+const x = d3.scaleBand()
+  .rangeRound([0, width - 300])
+  .paddingInner(0.05)
+  .align(0.1)
+  .domain(xDomain);
+const xAxis = d3.axisBottom()
+  .scale(x);
+
+
+// Colors
+const z = d3.scaleOrdinal()
+  .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
+  .domain(keys);
+
+
+// Update the SVG when the form changes
 const $fusionner = $("#fusionner");
-
-d3.csv("fake_data2.csv", (error, orig_data) => {
-  if (error) throw error;
-
-  let data = processData(orig_data);
-
-  const keysNotMerged = data.columns.slice(1);
-  const keysMerged = ['alimentaire', 'transport'];
-  let keys = keysNotMerged;
-
-  const x = d3.scaleBand()
-    .rangeRound([0, width])
-    .paddingInner(0.05)
-    .align(0.1)
-    .domain(data.map( (d) => d.serie ));
-
-  const xAxis = d3.axisBottom()
-    .scale(x);
-
-  const z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
-    .domain(keys);
-
-  const bars = draw(data);
-
-  handleSlider('boeuf');
-  handleSlider('porc');
-  handleSlider('train');
-  handleSlider('voiture');
-  handleSlider('bus');
-  handleSlider('2roues');
-  handleSlider('avion');
+$fusionner.on('change', () => update() );
+keysNotMerged.forEach( (key) => handleSlider(key) );
 
 
-  $fusionner.on('change', () => update() );
+// Draw the SVG
+const bars = draw(data);
 
-  function update () {
-    let data;
-    if ($fusionner.is(':checked')) {
-      keys = keysMerged;
-      data = processDataMerge(orig_data);
-    } else {
-      keys = keysNotMerged;
-      data = processData(orig_data);
-    }
-    draw(data, bars);
+
+// Function called when the form is changed
+function update () {
+  let data;
+  if ($fusionner.is(':checked')) {
+    keys = keysMerged;
+    data = processDataMerge(orig_data);
+  } else {
+    keys = keysNotMerged;
+    data = processData(orig_data);
   }
+  draw(data, bars);
+}
 
-  function handleSlider(sliderName) {
-    let $span = $(`#${sliderName}-valeur`);
-    $span.text(orig_data[1][sliderName]);
 
-    let $slider = $(`#${sliderName}`);
-    $slider.val(orig_data[1][sliderName]);
+// Convenience method for each slider of the form
+function handleSlider(sliderName) {
+  let $span = $(`#${sliderName}-valeur`);
+  $span.text(orig_data[1][sliderName]);
 
-    $slider.on('input', function () {
-      let newValue = $(this).val();
-      $span.text(newValue);
-      orig_data[1][sliderName] = (+newValue);
-      update();
-    });
-  }
+  let $slider = $(`#${sliderName}`);
+  $slider.val(orig_data[1][sliderName]);
 
-  function draw (data) {
+  $slider.on('input', function () {
+    let newValue = $(this).val();
+    $span.text(newValue);
+    orig_data[1][sliderName] = (+newValue);
+    update();
+  });
+}
 
-    svg.selectAll('g').remove();
 
-    // Compute the Y Axis
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, (d) => d.total )])
-      .rangeRound([height, 0])
-      .nice();
+// Drawing process
+function draw (data) {
 
-    const yAxis = d3.axisLeft()
-      .scale(y);
+  svg.selectAll('g').remove();
+  svg.selectAll('line').remove();
 
-    // Create the layers
-    const layers = d3.stack().keys(keys)(data);
+  // Compute the Y Axis
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(data, (d) => d.total )])
+    .rangeRound([height, 0])
+    .nice();
+  const yAxis = d3.axisLeft()
+    .scale(y);
 
-    // Create new graphics
-    const g = svg.append("g")
-      .attr("transform", "translate(100, 0)")
-      .selectAll("g")
-      .data(layers);
-    const bars = g.enter().append("g")
-      .style("fill", (d) => z(d.key) )
-      .selectAll("rect");
+  // Create the layers
+  const layers = d3.stack().keys(keys)(data);
 
-    bars
-      .data( (d) => d )
-      .enter().append("rect")
-        .attr("x", (d) => x(d.data.serie) )
-        .attr("y", (d) => y(d[1]) )
-        .attr("height", (d) => (y(d[0]) - y(d[1])) )
-        .attr("width", x.bandwidth())
-        // .attr("data-legend", function (d) { return d3.select(this.parentNode).datum().key; })
-        .on("mouseover", () => { tooltip.style("display", null); })
-        .on("mouseout", () => { tooltip.style("display", "none"); })
-        .on("mousemove", function(d) {
-          let key = d3.select(this.parentNode).datum().key;
-          let xPosition = d3.mouse(this)[0] + 30;
-          let yPosition = d3.mouse(this)[1] - 30;
-          tooltip.attr("transform", `translate(${xPosition}, ${yPosition})`);
-          let txt = `${key} : ${d[1] - d[0]} kg CO2 / an`;
-          tooltip.select("text").text(txt);
-        });
+  // Create new graphics
+  const g = svg.append("g")
+    .attr("transform", "translate(0, 0)")
+    .selectAll("g")
+    .data(layers);
+  const bars = g.enter().append("g")
+    .style("fill", (d) => z(d.key) )
+    .selectAll("rect");
 
-    // FIXME: label dans les rect
+  bars
+    .data( (d) => d )
+    .enter().append("rect")
+      .attr("x", (d) => x(d.data.serie) )
+      .attr("y", (d) => y(d[1]) )
+      .attr("height", (d) => (y(d[0]) - y(d[1])) )
+      .attr("width", x.bandwidth())
+      .on("mouseover", () => { tooltip.style("display", null); })
+      .on("mouseout", () => { tooltip.style("display", "none"); })
+      .on("mousemove", function(d) {
+        let key = d3.select(this.parentNode).datum().key;
+        let xPosition = d3.mouse(this)[0] + 30;
+        let yPosition = d3.mouse(this)[1] - 30;
+        tooltip.attr("transform", `translate(${xPosition}, ${yPosition})`);
+        let txt = `${key} : ${(d[1] - d[0]).toFixed(1)} kg CO2 / an`;
+        tooltip.select("text").text(txt);
+      });
 
-/*    g.append('g')
-      .attr('class', 'x axis')
-      .attr('transform', `translate(0, ${height})`)
-      .call(xAxis);
+  // FIXME: label dans les rect
 
-    g.append('g')
-      .attr('class', 'y axis')
-      .call(yAxis);*/
+  // Draw the X Axis
+  svg.append('g')
+    .attr('class', 'x axis')
+    .attr('transform', `translate(0, ${height})`)
+    .call(xAxis);
 
-    // Prep the tooltip bits, initial display is hidden
-    const tooltip = svg.append("g")
-      .attr("class", "tooltip")
-      .style("display", "none");
+  // Draw the Y Axis
+  svg.append('g')
+    .attr('class', 'y axis')
+    .call(yAxis);
 
-    tooltip.append("text")
-      .attr("x", 30)
-      .attr("dy", "1.2em")
-      .style("text-anchor", "middle")
-      .attr("font-size", "18px")
-      .attr("font-weight", "bold")
-      .style("pointer-events", "none");
+  // Threshold (objective of 1700kg of CO2 / year)
+  svg.append('line')
+    .attr('class', 'threshold')
+    .attr('x1', x(xDomain[0]))
+    .attr('y1', y(1700))
+    .attr('x2', width - 300)
+    .attr('y2', y(1700));
 
-    const legend = svg.append('g')
-      .attr('class', 'legend')
-      .attr('transform', "translate(12, 0)");
+  const tooltip = drawTooltip();
 
-    legend.selectAll('rect')
-      .data(keys)
-      .enter()
-      .append('rect')
-      .attr('x', 0)
-      .attr('y', (d, i) => i * 18 )
-      .attr('width', 12)
-      .attr('height', 12)
-      .attr('fill', (d, i) => z(i) );
+  drawLegend(keys);
 
-    legend.selectAll('text')
-      .data(keys)
-      .enter()
-      .append('text')
-      .text( (d) => d )
-      .attr('x', 18)
-      .attr('y', (d, i) => i * 18 )
-      .attr('text-anchor', 'start')
-      .attr('alignment-baseline', 'hanging');
+  return bars;
+}
 
-    return bars;
-  }
+
+// Create the placeholder for the tooltip, hidden initially
+function drawTooltip () {
+  const tooltip = svg.append("g")
+    .attr("class", "tooltip")
+    .style("display", "none");
+
+  tooltip.append("text")
+    .attr("x", 30)
+    .attr("dy", "1.2em")
+    .style("text-anchor", "middle")
+    .attr("font-size", "18px")
+    .attr("font-weight", "bold")
+    .style("pointer-events", "none");
+
+  return tooltip;
+}
+
+
+// Draw the legend (color + name of the category)
+function drawLegend (keys) {
+  const legend = svg.append('g')
+    .attr('class', 'legend')
+    .attr('transform', "translate(850, 0)");
+
+  legend.selectAll('rect')
+    .data(keys)
+    .enter()
+    .append('rect')
+    .attr('x', 0)
+    .attr('y', (d, i) => (i+1) * 18 )
+    .attr('width', 12)
+    .attr('height', 12)
+    .attr('fill', (d, i) => z(i) );
+
+  legend.selectAll('text')
+    .data(['Objectif (1700kg/an)', ...keys])
+    .enter()
+    .append('text')
+    .text( (d) => d )
+    .attr('x', 18)
+    .attr('y', (d, i) => i * 18 )
+    .attr('text-anchor', 'start')
+    .attr('alignment-baseline', 'hanging');
+}
+
 
 /*  function update (data, bars) {
 
-    // Compute the Y Axis
-    const y = d3.scaleLinear()
-      .domain([0, d3.max(data, function(d) { return d.total; })])
-      .rangeRound([height, 0])
-      .nice();
+  // Compute the Y Axis
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(data, function(d) { return d.total; })])
+    .rangeRound([height, 0])
+    .nice();
 
-    bars
-      .data(function (d) { return d; })
-      .attr("y", function(d) { return y(d[1]); })
-      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-      .transition()
-      // .ease(d3.easeLinear)
-      .duration(600)
-  }*/
+  bars
+    .data(function (d) { return d; })
+    .attr("y", function(d) { return y(d[1]); })
+    .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+    .transition()
+    // .ease(d3.easeLinear)
+    .duration(600)
+}*/
 
-});
 
+// Returns the equivalent in kg of CO2 / year for a given raw value
 function mapRawToCO2(value, column) {
   const fcts = {
     'train': (val) => val * 0.028,
@@ -200,6 +260,8 @@ function mapRawToCO2(value, column) {
   return fcts[column](value);
 }
 
+
+// Process one serie (i.e. one bar in the chart) of the dataset
 function processDataSerie(d, columns) {
   let t = 0;
   let d2 = { ...d };
@@ -213,6 +275,8 @@ function processDataSerie(d, columns) {
   return d2;
 }
 
+
+// Process the full dataset
 function processData (data) {
   let data2 = [];
   data2.columns = data.columns;
@@ -222,6 +286,8 @@ function processData (data) {
   return data2;
 }
 
+
+// Process one serie of the dataset and apply merging (i.e. subcategories => category)
 function processDataMergeSerie (d, columns) {
   let t = 0;
   let d2 = {serie: d.serie};
@@ -239,6 +305,8 @@ function processDataMergeSerie (d, columns) {
   return d2;
 }
 
+
+// Process the full dataset and apply merging
 function processDataMerge (data) {
   let columns = {
     'alimentaire': ['porc', 'boeuf'],
