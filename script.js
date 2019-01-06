@@ -58,7 +58,9 @@ const x = d3.scaleBand()
   .align(0.1)
   .domain(xDomain);
 const xAxis = d3.axisBottom()
-  .scale(x);
+  .scale(x)
+  .tickSize(0)
+  .tickPadding(6);
 
 
 // Colors
@@ -221,9 +223,9 @@ function drawLegend (keys) {
     .append('text')
     .text( (d) => d )
     .attr('x', 18)
-    .attr('y', (d, i) => i * 18 )
+    .attr('y', (d, i) => (i * 18) + 6 )
     .attr('text-anchor', 'start')
-    .attr('alignment-baseline', 'hanging');
+    .attr('dominant-baseline', 'middle');
 }
 
 
