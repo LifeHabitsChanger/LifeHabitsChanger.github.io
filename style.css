@@ -13,20 +13,29 @@
 }
 
 h2 {
-    padding-top: 2%;
-    padding-left: 35%;
+    // padding-top: 2%;
+    // padding-left: 35%;
 }
 
 svg {
-    padding-left: 25%;
-    text-align: center;
+    // padding-left: 25%;
+    // text-align: center;
 }
 
 form {
-    padding-left: 35%;
+    // padding-left: 35%;
 }
 
 
 input {
     width: 15%;
+    margin-right:0;
+}
+
+select {
+    width: 15%;
+}
+
+#regime {
+    padding-left:15px;
 }

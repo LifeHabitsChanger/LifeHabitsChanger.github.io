@@ -19,7 +19,7 @@ const svg = d3.select("#chart")
 // We will change this data using the form
 let orig_data = [
   {
-    "serie": "moyenne",
+    "serie": "Moyenne français",
     "Boeuf, agneau": "0.75",
     "Poulet, poisson, porc": "0.35",
     "Produits laitiers": "0.4",
@@ -29,14 +29,17 @@ let orig_data = [
     "Huile, margarine": "0.2",
     "En-cas, sucre": "0.05",
     "Boisson": "0.2",
-    "train": "1540",
-    "voiture": "11119",
-    "bus": "1226",
-    "2roues": "188",
-    "avion": "209"
+    "Train": "1540",
+    "Voiture": "11119",
+    "Bus": "1226",
+    "2 roues": "188",
+    "Avion": "209",
+    "Chauffage": "1.09",
+    "Électroménager": "1.09",
+    "Chauffage eau": "1.09"
   },
   {
-    "serie": "moi",
+    "serie": "Moi",
     "Boeuf, agneau": "0.75",
     "Poulet, poisson, porc": "0.35",
     "Produits laitiers": "0.4",
@@ -46,22 +49,24 @@ let orig_data = [
     "Huile, margarine": "0.2",
     "En-cas, sucre": "0.05",
     "Boisson": "0.2",
-    "train": "1540",
-    "voiture": "11119",
-    "bus": "1226",
-    "2roues": "188",
-    "avion": "209"
+    "Train": "1540",
+    "Voiture": "11119",
+    "Bus": "1226",
+    "2 roues": "188",
+    "Avion": "209",
+    "Chauffage": "1.09",
+    "Électroménager": "1.09",
+    "Chauffage eau": "1.09"
   }];
 
-// TODO utiliser coeffs
-let coeffs =
+/*let coeffs =
   {
     "train": 0.028,
     "voiture": 0.131,
     "bus": 0.130,
     "2roues": 0.117,
     "avion": 0.131
-  };
+  };*/
 orig_data.columns = Object.keys(orig_data[0]);
 
 
@@ -126,6 +131,10 @@ const $fusionner = $("#fusionner");
 $fusionner.on('change', () => update() );
 keysNotMerged.forEach( (key) => handleSlider(key) );
 
+handleSlider("nbHabitant");
+handleSlider("surface");
+
+
 // Liste déroulante pour l'alimentaire
 const $alim = $("#alimentaire");
 $alim.on('change', (val) => handleAlimentaire(val) );
@@ -135,7 +144,6 @@ const bars = draw(data);
 
 // Function called when the form is changed
 function update () {
-  console.log("update");
   let data;
   if ($fusionner.is(':checked')) {
     keys = keysMerged;
@@ -207,7 +215,6 @@ function handleAlimentaire(val)
       orig_data[1]["Boisson"] = 0.2;
       break;
   }
-  console.log(orig_data)
   update()
 }
 
@@ -217,7 +224,14 @@ function handleSlider(sliderName) {
   $span.text(orig_data[1][sliderName]);
 
   let $slider = $(`#${sliderName}`);
-  $slider.val(orig_data[1][sliderName]);
+
+  if (sliderName === "nbHabitant") {
+    $slider.val(2.31);
+  } else if (sliderName === "surface") {
+    $slider.val(91);
+  } else {
+    $slider.val(orig_data[1][sliderName]);
+  }
 
   $slider.on('input', function () {
     let newValue = $(this).val();
@@ -285,13 +299,13 @@ function draw (data) {
     .attr('class', 'y axis')
     .call(yAxis);
 
-  // Threshold (objective of 1700kg of CO2 / year)
+  // Threshold (objective of 4200 of CO2 / year)
   svg.append('line')
     .attr('class', 'threshold')
     .attr('x1', x(xDomain[0]))
-    .attr('y1', y(1700))
+    .attr('y1', y(4200))
     .attr('x2', width - 300)
-    .attr('y2', y(1700));
+    .attr('y2', y(4200));
 
   const tooltip = drawTooltip();
 
@@ -326,7 +340,7 @@ function drawLegend (keys) {
     .attr('transform', "translate(850, 0)");
 
   legend.selectAll('line')
-    .data(['Objectif (1700kg/an)'])
+    .data(['Objectif (4200 kg CO2/an)'])
     .enter()
     .append('line')
     .attr('class', 'threshold-legend')
@@ -346,7 +360,7 @@ function drawLegend (keys) {
     .attr('fill', (d) => z(d) );
 
   legend.selectAll('text')
-    .data(['Objectif (1700kg/an)', ...keys])
+    .data(['Objectif (4200 kg CO2/an)', ...keys])
     .enter()
     .append('text')
     .text( (d) => d )
@@ -377,12 +391,13 @@ function drawLegend (keys) {
 
 // Returns the equivalent in kg of CO2 / year for a given raw value
 function mapRawToCO2(value, column) {
+  kwHtoCO2 = 0.44;
   const fcts = {
-    'train': (val) => val * 0.028,
-    'voiture': (val) => val * 0.131,
-    'bus': (val) => val * 0.130,
-    '2roues': (val) => val * 0.117,
-    'avion': (val) => val * 0.131,
+    'Train': (val) => val * 0.028,
+    'Voiture': (val) => val * 0.131,
+    'Bus': (val) => val * 0.130,
+    '2 roues': (val) => val * 0.117,
+    'Avion': (val) => val * 0.131,
     "Boeuf, agneau": (val) => val * 1000,
     "Poulet, poisson, porc": (val) => val * 1000,
     "Produits laitiers": (val) => val * 1000,
@@ -392,9 +407,9 @@ function mapRawToCO2(value, column) {
     "Huile, margarine": (val) => val * 1000,
     "En-cas, sucre": (val) => val * 1000,
     "Boisson": (val) => val * 1000,
-    "classeChauffage": (val) => val * 110 * / ,
-    "classeElectromenager": (val) => val * 800,
-    "classeChauffageEau": (val) => val * 1100 / 
+    "Chauffage": (val) => val * 110 * $(`#surface-valeur`).text() / $(`#nbHabitant-valeur`).text() * kwHtoCO2,
+    "Électroménager": (val) => val * 1100 / $(`#nbHabitant-valeur`).text() * kwHtoCO2,
+    "Chauffage eau": (val) => val * 800 * kwHtoCO2
   };
   return fcts[column](value);
 }
@@ -450,7 +465,7 @@ function processDataMerge (data) {
   let columns = {
     'Alimentaire': ['Boeuf, agneau', 'Poulet, poisson, porc', "Produits laitiers", "En-cas, sucre", 'Céréales, pain', 'Légumes', 'Fruits', 'Huile, margarine', 'Boisson'],
     'Transport': ["Train", "Voiture", "Bus", "2 roues", "Avion"],
-    'Energie': ["Chauffage", "Eau chaude", "Electromenager"],
+    'Energie': ["Chauffage", "Électroménager", "Chauffage eau"],
   };
 
   let data2 = [];

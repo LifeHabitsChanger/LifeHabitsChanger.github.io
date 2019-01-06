@@ -12,61 +12,64 @@
     <svg id="chart"></svg>
 
     <form id="form">
+        <label id="regime" for="alimentaire">Régime alimentaire : </label>
         <select id="alimentaire" name="alimentaire" size="1">
-            <option>Beaucoup de viande
-            <option>Moyen
-            <option>Sans boeuf
-            <option>Végétarien
-            <option>Végan
+            <option>Beaucoup de viande</option>
+            <option selected="selected">Moyen</option>
+            <option>Sans boeuf</option>
+            <option>Végétarien</option>
+            <option>Végan</option>
         </select>
         <br />
 
-        <input type="range" id="train" name="train" min="0" max="20000" value="0">
-        <span id="train-valeur">0</span>
-        <label for="train">Deplacement train (km/an)</label>
+        <input type="range" id="Train" name="Train" min="0" max="20000" value="0" step="10">
+        <span id="Train-valeur">0</span>
+        <label for="Train">Deplacement train (km/an)</label>
         <br />
 
-        <input type="range" id="voiture" name="voiture" min="0" max="20000" value="0">
-        <span id="voiture-valeur">0</span>
-        <label for="voiture">Deplacement voiture (km/an)</label>
+        <input type="range" id="Voiture" name="Voiture" min="0" max="20000" value="0" step="10">
+        <span id="Voiture-valeur">0</span>
+        <label for="Voiture">Deplacement voiture (km/an)</label>
         <br />
 
-        <input type="range" id="bus" name="bus" min="0" max="20000" value="0">
-        <span id="bus-valeur">0</span>
-        <label for="bus">Deplacement bus (km/an)</label>
+        <input type="range" id="Bus" name="Bus" min="0" max="20000" value="0" step="10">
+        <span id="Bus-valeur">0</span>
+        <label for="Bus">Deplacement bus (km/an)</label>
         <br />
 
-        <input type="range" id="2roues" name="2roues" min="0" max="20000" value="0">
-        <span id="2roues-valeur">0</span>
-        <label for="2roues">Deplacement 2roues (km/an)</label>
+        <input type="range" id="2 roues" name="2 roues" min="0" max="20000" value="0" step="10">
+        <span id="2 roues-valeur">0</span>
+        <label for="2 roues">Deplacement 2 roues (km/an)</label>
         <br />
 
-        <input type="range" id="avion" name="avion" min="0" max="20000" value="0">
-        <span id="avion-valeur">0</span>
-        <label for="avion">Deplacement avion (km/an)</label>
+        <input type="range" id="Avion" name="Avion" min="0" max="20000" value="0" step="10">
+        <span id="Avion-valeur">0</span>
+        <label for="Avion">Deplacement avion (km/an)</label>
         <br />
 
-        <input type="number" id="nbHabitant" name="nbHabitant" min="0" value = "2.31">
-        <span >habitant(s) dans votre logement</span>
+        <input type="range" id="nbHabitant" name="nbHabitant" min="1" max="10" value="0">
+        <span id="nbHabitant-valeur">2.31</span>
+        <label >habitant(s) dans votre logement</label>
         <br />
 
-        <input type="number" id="surface" name="surface" min="0" value = "91">
-        <span >surface de votre logement (m²)</span>
+        <input type="range" id="surface" name="surface" min="9" max="300" value="0">
+        <span id="surface-valeur">91</span>
+        <label >surface de votre logement (m²)</label>
         <br />
 
-        <input type="range" id="classeChauffage" name="chauffage" min="0" max="6" value="5">
-        <span id="chauffage-valeur">5</span>
-        <label for="chauffage">Classe énergétique isolation</label>
+        <input type="range" id="Chauffage" name="Chauffage" min="0.73" max="1.27" value="5" step="0.09">
+        <span id="Chauffage-valeur">2</span>
+        <label for="Chauffage">Classe énergétique isolation</label>
         <br />
 
-        <input type="range" id="classeElectromenager" name="electromenager" min="0" max="6" value="5">
-        <span id="electromenager-valeur">5</span>
-        <label for="electromenager">Classe énergétique électromenager</label>
+        <input type="range" id="Électroménager" name="Électroménager" min="0.73" max="1.27" value="5" step="0.09">
+        <span id="Électroménager-valeur">1.09</span>
+        <label for="Électroménager">Classe énergétique électromenager</label>
         <br />
 
-        <input type="range" id="classeChauffageEau" name="chauffageEau" min="0" max="6" value="5">
-        <span id="chauffageEau-valeur">5</span>
-        <label for="chauffageEau">Classe énergétique chauffe eau</label>
+        <input type="range" id="Chauffage eau" name="Chauffage eau" min="0.73" max="1.27" value="5" step="0.09">
+        <span id="Chauffage eau-valeur">5</span>
+        <label for="Chauffage eau">Classe énergétique chauffe eau</label>
         <br />
 
         <input type="checkbox" id="fusionner" name="fusionner">
