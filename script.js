@@ -32,11 +32,11 @@ let orig_data = [
     "Train": "1540",
     "Voiture": "11119",
     "Bus": "1226",
-    "2 roues": "188",
+    "2roues": "188",
     "Avion": "209",
     "Chauffage": "1.09",
     "Électroménager": "1.09",
-    "Chauffage eau": "1.09"
+    "ChauffageEau": "1.09"
   },
   {
     "serie": "Moi",
@@ -52,21 +52,13 @@ let orig_data = [
     "Train": "1540",
     "Voiture": "11119",
     "Bus": "1226",
-    "2 roues": "188",
+    "2roues": "188",
     "Avion": "209",
     "Chauffage": "1.09",
     "Électroménager": "1.09",
-    "Chauffage eau": "1.09"
+    "ChauffageEau": "1.09"
   }];
 
-/*let coeffs =
-  {
-    "train": 0.028,
-    "voiture": 0.131,
-    "bus": 0.130,
-    "2roues": 0.117,
-    "avion": 0.131
-  };*/
 orig_data.columns = Object.keys(orig_data[0]);
 
 
@@ -111,7 +103,7 @@ const z = d3.scaleOrdinal()
             "#6495ED", // Train
             "#4169E1", // Voiture
             "#B0E0E6", // Bus
-            "#4682B4", // 2 roues
+            "#4682B4", // 2roues
             "#87CEEB", // Avion
 
             "#6B8E23", // Chauffage
@@ -396,7 +388,7 @@ function mapRawToCO2(value, column) {
     'Train': (val) => val * 0.028,
     'Voiture': (val) => val * 0.131,
     'Bus': (val) => val * 0.130,
-    '2 roues': (val) => val * 0.117,
+    '2roues': (val) => val * 0.117,
     'Avion': (val) => val * 0.131,
     "Boeuf, agneau": (val) => val * 1000,
     "Poulet, poisson, porc": (val) => val * 1000,
@@ -407,9 +399,9 @@ function mapRawToCO2(value, column) {
     "Huile, margarine": (val) => val * 1000,
     "En-cas, sucre": (val) => val * 1000,
     "Boisson": (val) => val * 1000,
-    "Chauffage": (val) => val * 110 * $(`#surface-valeur`).text() / $(`#nbHabitant-valeur`).text() * kwHtoCO2,
-    "Électroménager": (val) => val * 1100 / $(`#nbHabitant-valeur`).text() * kwHtoCO2,
-    "Chauffage eau": (val) => val * 800 * kwHtoCO2
+    "Chauffage": (val) => (val * 110 * $(`#surface-valeur`).text() * kwHtoCO2) / $(`#nbHabitant-valeur`).text() ,
+    "Électroménager": (val) => (val * 1100 * kwHtoCO2)/ $(`#nbHabitant-valeur`).text() ,
+    "ChauffageEau": (val) => val * 800 * kwHtoCO2
   };
   return fcts[column](value);
 }
@@ -464,8 +456,8 @@ function processDataMergeSerie (d, columns) {
 function processDataMerge (data) {
   let columns = {
     'Alimentaire': ['Boeuf, agneau', 'Poulet, poisson, porc', "Produits laitiers", "En-cas, sucre", 'Céréales, pain', 'Légumes', 'Fruits', 'Huile, margarine', 'Boisson'],
-    'Transport': ["Train", "Voiture", "Bus", "2 roues", "Avion"],
-    'Energie': ["Chauffage", "Électroménager", "Chauffage eau"],
+    'Transport': ["Train", "Voiture", "Bus", "2roues", "Avion"],
+    'Energie': ["Chauffage", "Électroménager", "ChauffageEau"],
   };
 
   let data2 = [];
