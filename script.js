@@ -392,9 +392,9 @@ function mapRawToCO2(value, column) {
     "Huile, margarine": (val) => val * 1000,
     "En-cas, sucre": (val) => val * 1000,
     "Boisson": (val) => val * 1000,
-    "classeChauffage":  (val) => val,
-    "classeElectromenager":  (val) => val,
-    "classeChauffageEau":  (val) => val
+    "classeChauffage": (val) => val * 110 * / ,
+    "classeElectromenager": (val) => val * 800,
+    "classeChauffageEau": (val) => val * 1100 / 
   };
   return fcts[column](value);
 }
