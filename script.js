@@ -8,8 +8,10 @@ const height = 600 - margin.top - margin.bottom;
 const svg = d3.select("#chart")
   .attr("width", width + margin.left + margin.right)
   .attr("height", height + margin.top + margin.bottom)
+  .style("text-align", "center")
   .append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
+  .attr("transform", `translate(${margin.left}, ${margin.top})`)
+  .style("text-align", "center");
 
 
 // Raw data (e.g. with kilometers or kilograms)
@@ -18,23 +20,44 @@ const svg = d3.select("#chart")
 let orig_data = [
   {
     "serie": "moyenne",
-    "porc": "1",
-    "boeuf": "3",
-    "train": "1540",
-    "voiture": "11119",
-    "bus": "1226",
-    "2roues": "188",
-    "avion": "209"
+    "Boeuf, agneau": "1",
+    "Poulet, poisson, porc": "1",
+    "Produits laitiers": "1",
+    "Céréales, pain": "1",
+    "Légumes": "1",
+    "Fruits": "1",
+    "Huile, margarine": "1",
+    "En-cas, sucre": "1",
+    "Boisson": "1",
+    "Train": "1", 
+    "Voiture": "1",
+    "Bus": "1",
+    "2 roues": "1",
+    "Avion": "1",
+    "Chauffage": "1",
+    "Eau chaude": "1",
+    "Electromenager": "1"
+    
   },
   {
     "serie": "moi",
-    "porc": "2",
-    "boeuf": "1",
-    "train": "500",
-    "voiture": "20000",
-    "bus": "0",
-    "2roues": "0",
-    "avion": "1000"
+    "Boeuf, agneau": "1",
+    "Poulet, poisson, porc": "1",
+    "Produits laitiers": "1",
+    "Céréales, pain": "1",
+    "Légumes": "1",
+    "Fruits": "1",
+    "Huile, margarine": "1",
+    "En-cas, sucre": "1",
+    "Boisson": "1",
+    "Train": "1", 
+    "Voiture": "1",
+    "Bus": "1",
+    "2 roues": "1",
+    "Avion": "1",
+    "Chauffage": "1",
+    "Eau chaude": "1",
+    "Electromenager": "1"
   }
 ];
 orig_data.columns = Object.keys(orig_data[0]);
@@ -46,8 +69,11 @@ let data = processData(orig_data);
 
 // We have 2 representations, so we retain the 2 sets of keys
 const keysNotMerged = data.columns.slice(1);
-const keysMerged = ['alimentaire', 'transport'];
+const keysMerged = ['Alimentaire', 'Transport', 'Energie'];
 let keys = keysNotMerged;
+
+// Inversion de Keys pour l'affichage inverse de la légende.
+let keys2 = [...keys].reverse();
 
 
 // X Domain, Scale and Axis
@@ -63,10 +89,34 @@ const xAxis = d3.axisBottom()
   .tickPadding(6);
 
 
-// Colors
+// Si l'on change l'ordre du dataset, il faut changer ici aussi
 const z = d3.scaleOrdinal()
-  .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"])
-  .domain(keys);
+    .range(["#8B0000", // Boeuf, agneau
+            "#DD3333", // Poulet, poisson, porc
+            "#B22222", // Produits laitiers
+            "#CC143C", // Céréales, pain
+            "#CD5C5C", // Légumes
+            "#F08080", // Fruits
+            "#E9967A", // Huile, margarine
+            "#FA8072", // En-cas, sucre
+            "#FFA07A", // Boisson
+
+            "#6495ED", // Train
+            "#4169E1", // Voiture
+            "#B0E0E6", // Bus
+            "#4682B4", // 2 roues
+            "#87CEEB", // Avion
+
+            "#6B8E23", // Chauffage
+            "#9ACD32", // Eau chaude 
+            "#008000", // Electromenager
+
+            "#CD5C5C", // Alimentaire
+            "#4169E1", // Transports
+            "#3CB371"  // Energie
+           ])
+    .domain([...keysNotMerged, ...keysMerged]);
+
 
 
 // Update the SVG when the form changes
@@ -177,7 +227,7 @@ function draw (data) {
 
   const tooltip = drawTooltip();
 
-  drawLegend(keys);
+  drawLegend(keys2);
 
   return bars;
 }
@@ -207,6 +257,7 @@ function drawLegend (keys) {
     .attr('class', 'legend')
     .attr('transform', "translate(850, 0)");
 
+
   legend.selectAll('rect')
     .data(keys)
     .enter()
@@ -215,7 +266,7 @@ function drawLegend (keys) {
     .attr('y', (d, i) => (i+1) * 18 )
     .attr('width', 12)
     .attr('height', 12)
-    .attr('fill', (d, i) => z(i) );
+    .attr('fill', (d) => z(d) );
 
   legend.selectAll('text')
     .data(['Objectif (1700kg/an)', ...keys])
@@ -250,14 +301,27 @@ function drawLegend (keys) {
 // Returns the equivalent in kg of CO2 / year for a given raw value
 function mapRawToCO2(value, column) {
   const fcts = {
-    'train': (val) => val * 0.028,
-    'voiture': (val) => val * 0.131,
-    'bus': (val) => val * 0.130,
-    '2roues': (val) => val * 0.117,
-    'avion': (val) => val * 0.131,
+    'Boeuf, agneau': (val) => val * 52 * 5,
+    'Poulet, poisson, porc': (val) => val  * 52 * 5,
+    'Produits laitiers': (val) => val * 52 * 5,
+    'Céréales, pain': (val) => val * 52 * 5,
+    'Légumes': (val) => val * 52 * 5,
+    'Fruits': (val) => val * 52 * 5,
+    'Huile, margarine': (val) => val * 52 * 5,
+    'En-cas, sucre': (val) => val * 52 * 5,
+    'Boisson': (val) => val * 52 * 5,
 
-    'porc': (val) => val * 52 * 3.54,
-    'boeuf': (val) => val * 52 * 30.8,
+
+    "Train": (val) => val * 52 * 5,
+    "Voiture": (val) => val * 52 * 5,
+    "Bus": (val) => val * 52 * 5,
+    "2 roues": (val) => val * 52 * 5,
+    "Avion":  (val) => val * 52 * 5,
+
+
+    "Chauffage":  (val) => val * 52 * 5,
+    "Eau chaude":  (val) => val * 52 * 5,
+    "Electromenager":  (val) => val * 52 * 5,
   };
   return fcts[column](value);
 }
@@ -311,12 +375,13 @@ function processDataMergeSerie (d, columns) {
 // Process the full dataset and apply merging
 function processDataMerge (data) {
   let columns = {
-    'alimentaire': ['porc', 'boeuf'],
-    'transport': ['train', 'voiture', 'bus', '2roues', 'avion'],
+    'Alimentaire': ['Boeuf, agneau', 'Poulet, poisson, porc', "Produits laitiers", "En-cas, sucre", 'Céréales, pain', 'Légumes', 'Fruits', 'Huile, margarine', 'Boisson'],
+    'Transport': ["Train", "Voiture", "Bus", "2 roues", "Avion"],
+    'Energie': ["Chauffage", "Eau chaude", "Electromenager"],
   };
 
   let data2 = [];
-  data2.columns = ['alimentaire', 'transport'];
+  data2.columns = ['Alimentaire', 'Transport', 'Energie'];
   for (let i = 0; i < data.length; ++i) {
     data2[i] = processDataMergeSerie(data[i], columns);
   }
