@@ -18,8 +18,15 @@ const svg = d3.select("#chart")
 let orig_data = [
   {
     "serie": "moyenne",
-    "porc": "1",
-    "boeuf": "3",
+    "Boeuf, agneau": "0.75",
+    "Poulet, poisson, porc": "0.35",
+    "Produits laitiers": "0.4",
+    "Céréales, pain": "0.3",
+    "Légumes": "0.15",
+    "Fruits": "0.2",
+    "Huile, margarine": "0.2",
+    "En-cas, sucre": "0.05",
+    "Boisson": "0.2",
     "train": "1540",
     "voiture": "11119",
     "bus": "1226",
@@ -28,15 +35,31 @@ let orig_data = [
   },
   {
     "serie": "moi",
-    "porc": "2",
-    "boeuf": "1",
-    "train": "500",
-    "voiture": "20000",
-    "bus": "0",
-    "2roues": "0",
-    "avion": "1000"
-  }
-];
+    "Boeuf, agneau": "0.75",
+    "Poulet, poisson, porc": "0.35",
+    "Produits laitiers": "0.4",
+    "Céréales, pain": "0.3",
+    "Légumes": "0.15",
+    "Fruits": "0.2",
+    "Huile, margarine": "0.2",
+    "En-cas, sucre": "0.05",
+    "Boisson": "0.2",
+    "train": "1540",
+    "voiture": "11119",
+    "bus": "1226",
+    "2roues": "188",
+    "avion": "209"
+  }];
+
+// TODO utiliser coeffs
+let coeffs =
+  {
+    "train": 0.028,
+    "voiture": 0.131,
+    "bus": 0.130,
+    "2roues": 0.117,
+    "avion": 0.131
+  };
 orig_data.columns = Object.keys(orig_data[0]);
 
 
@@ -74,13 +97,16 @@ const $fusionner = $("#fusionner");
 $fusionner.on('change', () => update() );
 keysNotMerged.forEach( (key) => handleSlider(key) );
 
+// Liste déroulante pour l'alimentaire
+const $alim = $("#alimentaire");
+$alim.on('change', (val) => handleAlimentaire(val) );
 
 // Draw the SVG
 const bars = draw(data);
 
-
 // Function called when the form is changed
 function update () {
+  console.log("update");
   let data;
   if ($fusionner.is(':checked')) {
     keys = keysMerged;
@@ -92,6 +118,69 @@ function update () {
   draw(data, bars);
 }
 
+// Gère la liste déroulante pour l'alimentaire
+function handleAlimentaire(val)
+{
+  switch($alim.val()){
+    case "Beaucoup de viande":
+      orig_data[1]["Boeuf, agneau"] = 1.5;
+      orig_data[1]["Poulet, poisson, porc"] = 0.4;
+      orig_data[1]["Produits laitiers"] = 0.5;
+      orig_data[1]["Céréales, pain"] = 0.2;
+      orig_data[1]["Légumes"] = 0.1;
+      orig_data[1]["Fruits"] = 0.1;
+      orig_data[1]["Huile, margarine"] = 0.25;
+      orig_data[1]["En-cas, sucre"] = 0.05;
+      orig_data[1]["Boisson"] = 0.2;
+      break;
+    case "Moyen":
+      orig_data[1]["Boeuf, agneau"] = 0.75;
+      orig_data[1]["Poulet, poisson, porc"] = 0.35;
+      orig_data[1]["Produits laitiers"] = 0.4;
+      orig_data[1]["Céréales, pain"] = 0.3;
+      orig_data[1]["Légumes"] = 0.15;
+      orig_data[1]["Fruits"] = 0.2;
+      orig_data[1]["Huile, margarine"] = 0.2;
+      orig_data[1]["En-cas, sucre"] = 0.05;
+      orig_data[1]["Boisson"] = 0.2;
+      break;
+    case "Sans boeuf":
+      orig_data[1]["Boeuf, agneau"] = 0;
+      orig_data[1]["Poulet, poisson, porc"] = 0.5;
+      orig_data[1]["Produits laitiers"] = 0.4;
+      orig_data[1]["Céréales, pain"] = 0.3;
+      orig_data[1]["Légumes"] = 0.15;
+      orig_data[1]["Fruits"] = 0.2;
+      orig_data[1]["Huile, margarine"] = 0.2;
+      orig_data[1]["En-cas, sucre"] = 0.05;
+      orig_data[1]["Boisson"] = 0.2;
+      break;
+    case "Végétarien":
+      orig_data[1]["Boeuf, agneau"] = 0;
+      orig_data[1]["Poulet, poisson, porc"] = 0;
+      orig_data[1]["Produits laitiers"] = 0.3;
+      orig_data[1]["Céréales, pain"] = 0.5;
+      orig_data[1]["Légumes"] = 0.25;
+      orig_data[1]["Fruits"] = 0.3;
+      orig_data[1]["Huile, margarine"] = 0.1;
+      orig_data[1]["En-cas, sucre"] = 0.05;
+      orig_data[1]["Boisson"] = 0.2;
+      break;
+    case "Végan":
+      orig_data[1]["Boeuf, agneau"] = 0;
+      orig_data[1]["Poulet, poisson, porc"] = 0;
+      orig_data[1]["Produits laitiers"] = 0;
+      orig_data[1]["Céréales, pain"] = 0.55;
+      orig_data[1]["Légumes"] = 0.25;
+      orig_data[1]["Fruits"] = 0.3;
+      orig_data[1]["Huile, margarine"] = 0.15;
+      orig_data[1]["En-cas, sucre"] = 0.05;
+      orig_data[1]["Boisson"] = 0.2;
+      break;
+  }
+  console.log(orig_data)
+  update()
+}
 
 // Convenience method for each slider of the form
 function handleSlider(sliderName) {
@@ -265,9 +354,18 @@ function mapRawToCO2(value, column) {
     'bus': (val) => val * 0.130,
     '2roues': (val) => val * 0.117,
     'avion': (val) => val * 0.131,
-
-    'porc': (val) => val * 52 * 3.54,
-    'boeuf': (val) => val * 52 * 30.8,
+    "Boeuf, agneau": (val) => val * 1000,
+    "Poulet, poisson, porc": (val) => val * 1000,
+    "Produits laitiers": (val) => val * 1000,
+    "Céréales, pain": (val) => val * 1000,
+    "Légumes": (val) => val * 1000,
+    "Fruits": (val) => val * 1000,
+    "Huile, margarine": (val) => val * 1000,
+    "En-cas, sucre": (val) => val * 1000,
+    "Boisson": (val) => val * 1000,
+    "classeChauffage":  (val) => val,
+    "classeElectromenager":  (val) => val,
+    "classeChauffageEau":  (val) => val
   };
   return fcts[column](value);
 }

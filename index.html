@@ -10,14 +10,13 @@
     <svg id="chart"></svg>
 
     <form id="form">
-        <input type="range" id="boeuf" name="boeuf" min="0" max="10" value="0">
-        <span id="boeuf-valeur">0</span>
-        <label for="boeuf">Conso boeuf (kg/semaine)</label>
-        <br />
-
-        <input type="range" id="porc" name="porc" min="0" max="10" value="0">
-        <span id="porc-valeur">0</span>
-        <label for="porc">Conso porc (kg/semaine)</label>
+        <select id="alimentaire" name="alimentaire" size="1">
+            <option>Beaucoup de viande
+            <option>Moyen
+            <option>Sans boeuf
+            <option>Végétarien
+            <option>Végan
+        </select>
         <br />
 
         <input type="range" id="train" name="train" min="0" max="20000" value="0">
@@ -43,6 +42,29 @@
         <input type="range" id="avion" name="avion" min="0" max="20000" value="0">
         <span id="avion-valeur">0</span>
         <label for="avion">Deplacement avion (km/an)</label>
+        <br />
+
+        <input type="number" id="nbHabitant" name="nbHabitant" min="0" value = "2.31">
+        <span >habitant(s) dans votre logement</span>
+        <br />
+
+        <input type="number" id="surface" name="surface" min="0" value = "91">
+        <span >surface de votre logement (m²)</span>
+        <br />
+
+        <input type="range" id="classeChauffage" name="chauffage" min="0" max="6" value="5">
+        <span id="chauffage-valeur">5</span>
+        <label for="chauffage">Classe énergétique isolation</label>
+        <br />
+
+        <input type="range" id="classeElectromenager" name="electromenager" min="0" max="6" value="5">
+        <span id="electromenager-valeur">5</span>
+        <label for="electromenager">Classe énergétique électromenager</label>
+        <br />
+
+        <input type="range" id="classeChauffageEau" name="chauffageEau" min="0" max="6" value="5">
+        <span id="chauffageEau-valeur">5</span>
+        <label for="chauffageEau">Classe énergétique chauffe eau</label>
         <br />
 
         <input type="checkbox" id="fusionner" name="fusionner">
