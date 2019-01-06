@@ -257,6 +257,15 @@ function drawLegend (keys) {
     .attr('class', 'legend')
     .attr('transform', "translate(850, 0)");
 
+  legend.selectAll('line')
+    .data(['Objectif (1700kg/an)'])
+    .enter()
+    .append('line')
+    .attr('class', 'threshold-legend')
+    .attr('x1', 0)
+    .attr('x2', 12)
+    .attr('y1', 6)
+    .attr('y2', 6);
 
   legend.selectAll('rect')
     .data(keys)
