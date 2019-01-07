@@ -34,9 +34,9 @@ let orig_data = [
     "Bus": "1226",
     "2roues": "188",
     "Avion": "209",
-    "Chauffage": "1.09",
-    "Électroménager": "1.09",
-    "ChauffageEau": "1.09"
+    "Chauffage": "1",
+    "Électroménager": "1",
+    "ChauffageEau": "1"
   },
   {
     "serie": "Moi",
@@ -54,9 +54,9 @@ let orig_data = [
     "Bus": "1226",
     "2roues": "188",
     "Avion": "209",
-    "Chauffage": "1.09",
-    "Électroménager": "1.09",
-    "ChauffageEau": "1.09"
+    "Chauffage": "1",
+    "Électroménager": "1",
+    "ChauffageEau": "1"
   }];
 
 orig_data.columns = Object.keys(orig_data[0]);
@@ -127,6 +127,11 @@ handleSlider("surface");
 // Liste déroulante pour l'alimentaire
 const $alim = $("#alimentaire");
 $alim.on('change', (val) => handleAlimentaire(val) );
+
+// Gestion des checkbox
+$("#mangerLocal").on('change', (val) => update() );
+$("#debrancherAppareils").on('change', (val) => update() );
+$("#douche").on('change', (val) => update() );
 
 // Draw the SVG
 const bars = draw(data);
@@ -368,7 +373,7 @@ function drawLegend (keys) {
     .attr('fill', (d) => z(d) );
 
   legend.selectAll('text')
-    .data(['Objectif (4200 kg CO2/an)', ...keys])
+    .data(['Objectif COP21 (4200 kg CO2/an)', ...keys])
     .enter()
     .append('text')
     .text( (d) => d )
@@ -385,25 +390,28 @@ function mapRawToCO2(value, i, column) {
   let kwHtoCO2 = 0.44;
   let surfaceValeur = (i === 0)? 91 : $(`#surface`).val();
   let nbHab = (i === 0)? 2.31 :$(`#nbHabitant-valeur`).text();
-
+  let coefMangerLocal = (i === 0)? 1 : ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1;;
+  let consoBaseElectromenager = (i === 0)? 1100 : ((document.getElementById("debrancherAppareils").checked) === true)? 800 : 1100;;
+  let consoChauffeEau = (i === 0)? 800 : ((document.getElementById("douche").checked) === true)? 400 : 800;;
+  
   const fcts = {
     'Train': (val) => val * 0.028,
     'Voiture': (val) => val * 0.131,
     'Bus': (val) => val * 0.130,
     '2roues': (val) => val * 0.117,
     'Avion': (val) => val * 0.131,
-    "Boeuf, agneau": (val) => val * 1000,
-    "Poulet, poisson, porc": (val) => val * 1000,
-    "Produits laitiers": (val) => val * 1000,
-    "Céréales, pain": (val) => val * 1000,
-    "Légumes": (val) => val * 1000,
-    "Fruits": (val) => val * 1000,
-    "Huile, margarine": (val) => val * 1000,
-    "En-cas, sucre": (val) => val * 1000,
+    "Boeuf, agneau": (val) => val * 1000 * coefMangerLocal,
+    "Poulet, poisson, porc": (val) => val * 1000 * coefMangerLocal,
+    "Produits laitiers": (val) => val * 1000 * coefMangerLocal,
+    "Céréales, pain": (val) => val * 1000 * coefMangerLocal,
+    "Légumes": (val) => val * 1000 * coefMangerLocal,
+    "Fruits": (val) => val * 1000 * coefMangerLocal,
+    "Huile, margarine": (val) => val * 1000 * coefMangerLocal,
+    "En-cas, sucre": (val) => val * 1000 * coefMangerLocal,
     "Boisson": (val) => val * 1000,
     "Chauffage": (val) => (val * 110 * surfaceValeur * kwHtoCO2) / nbHab ,
-    "Électroménager": (val) => (val * 1100 * kwHtoCO2)/ nbHab ,
-    "ChauffageEau": (val) => val * 800 * kwHtoCO2
+    "Électroménager": (val) => (val * consoBaseElectromenager * kwHtoCO2)/ nbHab ,
+    "ChauffageEau": (val) => val * consoChauffeEau * kwHtoCO2
   };
   
   return fcts[column](value);

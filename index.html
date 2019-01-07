@@ -38,22 +38,31 @@
 
                 <div class="form-line">
                     <input type="range" id="Chauffage" name="Chauffage" min="0.73" max="1.27" value="5" step="0.09" class="reversed">
-                    <span id="Chauffage-valeur">1.09</span>
+                    <span id="Chauffage-valeur">1</span>
                     <label for="Chauffage"> : Classe énergétique isolation</label>
                 </div>
 
                 <div class="form-line">
                     <input type="range" id="Électroménager" name="Électroménager" min="0.73" max="1.27" value="5" step="0.09" class="reversed">
-                    <span id="Électroménager-valeur">1.09</span>
+                    <span id="Électroménager-valeur">1</span>
                     <label for="Électroménager"> : Classe énergétique électromenager</label>
                 </div>
 
                 <div class="form-line">
                     <input type="range" id="ChauffageEau" name="ChauffageEau" min="0.73" max="1.27" value="5" step="0.09" class="reversed">
-                    <span id="ChauffageEau-valeur">1.09</span>
+                    <span id="ChauffageEau-valeur">1</span>
                     <label for="ChauffageEau"> : Classe énergétique chauffe eau</label>
                 </div>
 
+                <div class="form-line">
+                    <input type="checkbox" id="douche" name="douche">
+                    <label for="douche">Je privilégie les douches aux bains</label>
+                </div>
+
+                <div class="form-line">
+                    <input type="checkbox" id="debrancherAppareils" name="debrancherAppareils">
+                    <label for="debrancherAppareils">Je débranche mes appareils au lieu de les laisser en veille</label>
+                </div>
 
                 <h4>Transport</h4>
 
@@ -101,6 +110,11 @@
                         <option>Végétarien</option>
                         <option>Végan</option>
                     </select>
+                </div>
+
+                <div class="form-line">
+                    <input type="checkbox" id="mangerLocal" name="mangerLocal">
+                    <label for="mangerLocal">Je consomme en majorité des produits locaux et de saison</label>
                 </div>
 
                 <h4>Interface</h4>
