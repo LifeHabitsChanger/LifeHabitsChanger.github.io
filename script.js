@@ -209,8 +209,22 @@ function handleAlimentaire(val)
 
 // Convenience method for each slider of the form
 function handleSlider(sliderName) {
+  let energyValToClass = {
+    "0.73" : "A",
+    "0.82" : "B",
+    "0.91" : "C",
+    "1" : "D",
+    "1.09" : "E",
+    "1.18" : "F",
+    "1.27" : "G"
+  }
+
   let $span = $(`#${sliderName}-valeur`);
-  $span.text(orig_data[1][sliderName]);
+  if (sliderName === "Chauffage" || sliderName === "Électroménager" || sliderName === "ChauffageEau") {
+    $span.text(energyValToClass[orig_data[1][sliderName] + ""]);
+  } else {
+    $span.text(orig_data[1][sliderName]);
+  }
 
   let $slider = $(`#${sliderName}`);
 
@@ -224,7 +238,11 @@ function handleSlider(sliderName) {
 
   $slider.on('input', function () {
     let newValue = $(this).val();
-    $span.text(newValue);
+    if (sliderName === "Chauffage" || sliderName === "Électroménager" || sliderName === "ChauffageEau") {
+      $span.text(energyValToClass[newValue + ""]);
+    } else {
+      $span.text(newValue);
+    }
     orig_data[1][sliderName] = (+newValue);
     update();
   });
