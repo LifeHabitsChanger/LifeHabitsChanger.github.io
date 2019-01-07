@@ -71,9 +71,6 @@ const keysNotMerged = data.columns.slice(1);
 const keysMerged = ['Alimentaire', 'Transport', 'Energie'];
 let keys = keysNotMerged;
 
-// Inversion de Keys pour l'affichage inverse de la légende.
-let keys2 = [...keys].reverse();
-
 
 // X Domain, Scale and Axis
 const xDomain = data.map( (d) => d.serie );
@@ -301,7 +298,7 @@ function draw (data) {
 
   const tooltip = drawTooltip();
 
-  drawLegend(keys2);
+  drawLegend(keys);
 
   return bars;
 }
@@ -327,6 +324,7 @@ function drawTooltip () {
 
 // Draw the legend (color + name of the category)
 function drawLegend (keys) {
+  keys = [...keys].reverse();
   const legend = svg.append('g')
     .attr('class', 'legend')
     .attr('transform', "translate(850, 0)");
@@ -361,24 +359,6 @@ function drawLegend (keys) {
     .attr('text-anchor', 'start')
     .attr('dominant-baseline', 'middle');
 }
-
-
-/*  function update (data, bars) {
-
-  // Compute the Y Axis
-  const y = d3.scaleLinear()
-    .domain([0, d3.max(data, function(d) { return d.total; })])
-    .rangeRound([height, 0])
-    .nice();
-
-  bars
-    .data(function (d) { return d; })
-    .attr("y", function(d) { return y(d[1]); })
-    .attr("height", function(d) { return y(d[0]) - y(d[1]); })
-    .transition()
-    // .ease(d3.easeLinear)
-    .duration(600)
-}*/
 
 
 // Returns the equivalent in kg of CO2 / year for a given raw value
