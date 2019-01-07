@@ -332,7 +332,7 @@ function drawLegend (keys) {
     .attr('transform', "translate(850, 0)");
 
   legend.selectAll('line')
-    .data(['Objectif (4200 kg CO2/an)'])
+    .data(['Objectif COP21 (4200 kg CO2/an)'])
     .enter()
     .append('line')
     .attr('class', 'threshold-legend')
@@ -382,8 +382,12 @@ function drawLegend (keys) {
 
 
 // Returns the equivalent in kg of CO2 / year for a given raw value
-function mapRawToCO2(value, column) {
-  kwHtoCO2 = 0.44;
+function mapRawToCO2(value, i, column) {
+
+  let kwHtoCO2 = 0.44;
+  let surfaceValeur = (i === 0)? 91 : $(`#surface`).val();
+  let nbHab = (i === 0)? 2.31 :$(`#nbHabitant-valeur`).text();
+
   const fcts = {
     'Train': (val) => val * 0.028,
     'Voiture': (val) => val * 0.131,
@@ -399,21 +403,22 @@ function mapRawToCO2(value, column) {
     "Huile, margarine": (val) => val * 1000,
     "En-cas, sucre": (val) => val * 1000,
     "Boisson": (val) => val * 1000,
-    "Chauffage": (val) => (val * 110 * $(`#surface-valeur`).text() * kwHtoCO2) / $(`#nbHabitant-valeur`).text() ,
-    "Électroménager": (val) => (val * 1100 * kwHtoCO2)/ $(`#nbHabitant-valeur`).text() ,
+    "Chauffage": (val) => (val * 110 * surfaceValeur * kwHtoCO2) / nbHab ,
+    "Électroménager": (val) => (val * 1100 * kwHtoCO2)/ nbHab ,
     "ChauffageEau": (val) => val * 800 * kwHtoCO2
   };
+  
   return fcts[column](value);
 }
 
 
 // Process one serie (i.e. one bar in the chart) of the dataset
-function processDataSerie(d, columns) {
+function processDataSerie(d, i, columns) {
   let t = 0;
   let d2 = { ...d };
   for (let j = 1; j < columns.length; ++j) {
     let value = +d2[columns[j]];
-    value = mapRawToCO2(value, columns[j]);
+    value = mapRawToCO2(value, i, columns[j]);
     d2[columns[j]] = value;
     t += value;
   }
@@ -427,14 +432,14 @@ function processData (data) {
   let data2 = [];
   data2.columns = data.columns;
   for (let i = 0; i < data.length; ++i) {
-    data2[i] = processDataSerie(data[i], data.columns);
+    data2[i] = processDataSerie(data[i], i, data.columns);
   }
   return data2;
 }
 
 
 // Process one serie of the dataset and apply merging (i.e. subcategories => category)
-function processDataMergeSerie (d, columns) {
+function processDataMergeSerie (d, i, columns) {
   let t = 0;
   let d2 = {serie: d.serie};
   for (let key in columns) {
@@ -442,7 +447,7 @@ function processDataMergeSerie (d, columns) {
     let acc = 0;
     for (let col2 in columns2) {
       col2 = columns2[col2];
-      acc += mapRawToCO2(d[col2], col2);
+      acc += mapRawToCO2(d[col2], i, col2);
     }
     d2[key] = acc;
     t += acc;
@@ -463,7 +468,7 @@ function processDataMerge (data) {
   let data2 = [];
   data2.columns = ['Alimentaire', 'Transport', 'Energie'];
   for (let i = 0; i < data.length; ++i) {
-    data2[i] = processDataMergeSerie(data[i], columns);
+    data2[i] = processDataMergeSerie(data[i], i, columns);
   }
   return data2;
 }
