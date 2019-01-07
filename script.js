@@ -408,7 +408,7 @@ function mapRawToCO2(value, i, column) {
     "Fruits": (val) => val * 1000 * coefMangerLocal,
     "Huile, margarine": (val) => val * 1000 * coefMangerLocal,
     "En-cas, sucre": (val) => val * 1000 * coefMangerLocal,
-    "Boisson": (val) => val * 1000,
+    "Boisson": (val) => val * 1000 * coefMangerLocal,
     "Chauffage": (val) => (val * 110 * surfaceValeur * kwHtoCO2) / nbHab ,
     "Électroménager": (val) => (val * consoBaseElectromenager * kwHtoCO2)/ nbHab ,
     "ChauffageEau": (val) => val * consoChauffeEau * kwHtoCO2
