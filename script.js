@@ -1,6 +1,6 @@
 // Dimensions of the SVG
 const margin = {top: 20, right: 20, bottom: 70, left: 40};
-const width = 1200 - margin.left - margin.right;
+const width = 1000 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
 
 
@@ -327,7 +327,7 @@ function drawLegend (keys) {
   keys = [...keys].reverse();
   const legend = svg.append('g')
     .attr('class', 'legend')
-    .attr('transform', "translate(850, 0)");
+    .attr('transform', `translate(${width - 250}, 0)`);
 
   legend.selectAll('line')
     .data(['Objectif (4200 kg CO2/an)'])

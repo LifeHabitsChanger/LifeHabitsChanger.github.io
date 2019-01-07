@@ -9,72 +9,113 @@
 
 
     <h2>PomClimat : Calculateur d'émission de Co2</h2>
-    <svg id="chart"></svg>
 
-    <form id="form">
-        <label id="regime" for="alimentaire">Régime alimentaire : </label>
-        <select id="alimentaire" name="alimentaire" size="1">
-            <option>Beaucoup de viande</option>
-            <option selected="selected">Moyen</option>
-            <option>Sans boeuf</option>
-            <option>Végétarien</option>
-            <option>Végan</option>
-        </select>
-        <br />
+    <div id="wrapper">
 
-        <input type="range" id="Train" name="Train" min="0" max="20000" value="0" step="10">
-        <span id="Train-valeur">0</span>
-        <label for="Train">Deplacement train (km/an)</label>
-        <br />
+        <div id="left-div">
+            <svg id="chart"></svg>
+        </div>
 
-        <input type="range" id="Voiture" name="Voiture" min="0" max="20000" value="0" step="10">
-        <span id="Voiture-valeur">0</span>
-        <label for="Voiture">Deplacement voiture (km/an)</label>
-        <br />
+        <div id="right-div">
 
-        <input type="range" id="Bus" name="Bus" min="0" max="20000" value="0" step="10">
-        <span id="Bus-valeur">0</span>
-        <label for="Bus">Deplacement bus (km/an)</label>
-        <br />
+            <h3>Entrez ici vos informations</h3>
 
-        <input type="range" id="2roues" name="2roues" min="0" max="20000" value="0" step="10">
-        <span id="2roues-valeur">0</span>
-        <label for="2roues">Deplacement 2 roues (km/an)</label>
-        <br />
+            <form id="form">
 
-        <input type="range" id="Avion" name="Avion" min="0" max="20000" value="0" step="10">
-        <span id="Avion-valeur">0</span>
-        <label for="Avion">Deplacement avion (km/an)</label>
-        <br />
+                <h4>Energie</h4>
 
-        <input type="range" id="nbHabitant" name="nbHabitant" min="1" max="10" value="0">
-        <span id="nbHabitant-valeur">2.31</span>
-        <label >habitant(s) dans votre logement</label>
-        <br />
+                <div class="form-line">
+                    <input type="range" id="nbHabitant" name="nbHabitant" min="1" max="10" value="0">
+                    <span id="nbHabitant-valeur">2.31</span>
+                    <label >habitant(s) dans votre logement</label>
+                </div>
 
-        <input type="range" id="surface" name="surface" min="9" max="300" value="0">
-        <span id="surface-valeur">91</span>
-        <label >surface de votre logement (m²)</label>
-        <br />
+                <div class="form-line">
+                    <input type="range" id="surface" name="surface" min="9" max="300" value="0">
+                    <span id="surface-valeur">91</span>
+                    <label >surface de votre logement (m²)</label>
+                </div>
 
-        <input type="range" id="Chauffage" name="Chauffage" min="0.73" max="1.27" value="5" step="0.09">
-        <span id="Chauffage-valeur">1.09</span>
-        <label for="Chauffage">Classe énergétique isolation</label>
-        <br />
+                <div class="form-line">
+                    <input type="range" id="Chauffage" name="Chauffage" min="0.73" max="1.27" value="5" step="0.09">
+                    <span id="Chauffage-valeur">1.09</span>
+                    <label for="Chauffage">Classe énergétique isolation</label>
+                </div>
 
-        <input type="range" id="Électroménager" name="Électroménager" min="0.73" max="1.27" value="5" step="0.09">
-        <span id="Électroménager-valeur">1.09</span>
-        <label for="Électroménager">Classe énergétique électromenager</label>
-        <br />
+                <div class="form-line">
+                    <input type="range" id="Électroménager" name="Électroménager" min="0.73" max="1.27" value="5" step="0.09">
+                    <span id="Électroménager-valeur">1.09</span>
+                    <label for="Électroménager">Classe énergétique électromenager</label>
+                </div>
 
-        <input type="range" id="ChauffageEau" name="ChauffageEau" min="0.73" max="1.27" value="5" step="0.09">
-        <span id="ChauffageEau-valeur">1.09</span>
-        <label for="ChauffageEau">Classe énergétique chauffe eau</label>
-        <br />
+                <div class="form-line">
+                    <input type="range" id="ChauffageEau" name="ChauffageEau" min="0.73" max="1.27" value="5" step="0.09">
+                    <span id="ChauffageEau-valeur">1.09</span>
+                    <label for="ChauffageEau">Classe énergétique chauffe eau</label>
+                </div>
 
-        <input type="checkbox" id="fusionner" name="fusionner">
-        <label for="fusionner">Fusionner categories</label>
-    </form>
+
+                <h4>Transport</h4>
+
+                <div class="form-line">
+                    <input type="range" id="Train" name="Train" min="0" max="20000" value="0" step="10">
+                    <span id="Train-valeur">0</span>
+                    <label for="Train">Deplacement train (km/an)</label>
+                </div>
+
+
+                <div class="form-line">
+                    <input type="range" id="Voiture" name="Voiture" min="0" max="20000" value="0" step="10">
+                    <span id="Voiture-valeur">0</span>
+                    <label for="Voiture">Deplacement voiture (km/an)</label>
+                </div>
+
+                <div class="form-line">
+                    <input type="range" id="Bus" name="Bus" min="0" max="20000" value="0" step="10">
+                    <span id="Bus-valeur">0</span>
+                    <label for="Bus">Deplacement bus (km/an)</label>
+                </div>
+
+
+                <div class="form-line">
+                    <input type="range" id="2roues" name="2roues" min="0" max="20000" value="0" step="10">
+                    <span id="2roues-valeur">0</span>
+                    <label for="2roues">Deplacement 2 roues (km/an)</label>
+                </div>
+
+                <div class="form-line">
+                    <input type="range" id="Avion" name="Avion" min="0" max="20000" value="0" step="10">
+                    <span id="Avion-valeur">0</span>
+                    <label for="Avion">Deplacement avion (km/an)</label>
+                </div>
+
+
+                <h4>Alimentaire</h4>
+
+                <div class="form-line">
+                    <label id="regime" for="alimentaire">Régime alimentaire : </label>
+                    <select id="alimentaire" name="alimentaire" size="1">
+                        <option>Beaucoup de viande</option>
+                        <option selected="selected">Moyen</option>
+                        <option>Sans boeuf</option>
+                        <option>Végétarien</option>
+                        <option>Végan</option>
+                    </select>
+                </div>
+
+                <h4>Interface</h4>
+
+                <div class="form-line">
+                    <input type="checkbox" id="fusionner" name="fusionner">
+                    <label for="fusionner">Fusionner categories</label>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+
+
 
     <!-- TODO: Mettre un DOMContentLoaded et deplacer dans le header -->
     <script src="script.js"></script>
