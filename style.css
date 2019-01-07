@@ -1,3 +1,11 @@
+body {
+    background-color: lightgrey;
+}
+
+h1 {
+    text-align: center;
+}
+
 .threshold {
     fill: none;
     stroke: black;
@@ -33,17 +41,18 @@
     text-align: center;
 }
 
-form {
-}
-
 .form-line {
     padding-bottom: 10px;
 }
 
-.form-line input, .form-line select {
+.form-line input[type=range], .form-line select {
     width: 45%;
     margin-right: 3px;
     vertical-align: baseline;
+}
+
+.form-line input.reversed {
+    direction: rtl;
 }
 
 .form-line label, .form-line span {

@@ -8,7 +8,7 @@
 <body>
 
 
-    <h2>PomClimat : Calculateur d'émission de Co2</h2>
+    <h1>PomClimat : Calculateur d'émission de Co2</h1>
 
     <div id="wrapper">
 
@@ -25,33 +25,33 @@
                 <h4>Energie</h4>
 
                 <div class="form-line">
-                    <input type="range" id="nbHabitant" name="nbHabitant" min="1" max="10" value="0">
+                    <input type="range" id="nbHabitant" name="nbHabitant" min="1" max="10" value="2.31">
                     <span id="nbHabitant-valeur">2.31</span>
-                    <label >habitant(s) dans votre logement</label>
+                    <label > : habitant(s) dans votre logement</label>
                 </div>
 
                 <div class="form-line">
-                    <input type="range" id="surface" name="surface" min="9" max="300" value="0">
+                    <input type="range" id="surface" name="surface" min="9" max="300" value="91">
                     <span id="surface-valeur">91</span>
-                    <label >surface de votre logement (m²)</label>
+                    <label>m² : surface de votre logement</label>
                 </div>
 
                 <div class="form-line">
-                    <input type="range" id="Chauffage" name="Chauffage" min="0.73" max="1.27" value="5" step="0.09">
+                    <input type="range" id="Chauffage" name="Chauffage" min="0.73" max="1.27" value="5" step="0.09" class="reversed">
                     <span id="Chauffage-valeur">1.09</span>
-                    <label for="Chauffage">Classe énergétique isolation</label>
+                    <label for="Chauffage"> : Classe énergétique isolation</label>
                 </div>
 
                 <div class="form-line">
-                    <input type="range" id="Électroménager" name="Électroménager" min="0.73" max="1.27" value="5" step="0.09">
+                    <input type="range" id="Électroménager" name="Électroménager" min="0.73" max="1.27" value="5" step="0.09" class="reversed">
                     <span id="Électroménager-valeur">1.09</span>
-                    <label for="Électroménager">Classe énergétique électromenager</label>
+                    <label for="Électroménager"> : Classe énergétique électromenager</label>
                 </div>
 
                 <div class="form-line">
-                    <input type="range" id="ChauffageEau" name="ChauffageEau" min="0.73" max="1.27" value="5" step="0.09">
+                    <input type="range" id="ChauffageEau" name="ChauffageEau" min="0.73" max="1.27" value="5" step="0.09" class="reversed">
                     <span id="ChauffageEau-valeur">1.09</span>
-                    <label for="ChauffageEau">Classe énergétique chauffe eau</label>
+                    <label for="ChauffageEau"> : Classe énergétique chauffe eau</label>
                 </div>
 
 
@@ -60,33 +60,33 @@
                 <div class="form-line">
                     <input type="range" id="Train" name="Train" min="0" max="20000" value="0" step="10">
                     <span id="Train-valeur">0</span>
-                    <label for="Train">Deplacement train (km/an)</label>
+                    <label for="Train">km/an : Déplacement train</label>
                 </div>
 
 
                 <div class="form-line">
                     <input type="range" id="Voiture" name="Voiture" min="0" max="20000" value="0" step="10">
                     <span id="Voiture-valeur">0</span>
-                    <label for="Voiture">Deplacement voiture (km/an)</label>
+                    <label for="Voiture">km/an : Déplacement voiture</label>
                 </div>
 
                 <div class="form-line">
                     <input type="range" id="Bus" name="Bus" min="0" max="20000" value="0" step="10">
                     <span id="Bus-valeur">0</span>
-                    <label for="Bus">Deplacement bus (km/an)</label>
+                    <label for="Bus">km/an : Déplacement bus</label>
                 </div>
 
 
                 <div class="form-line">
                     <input type="range" id="2roues" name="2roues" min="0" max="20000" value="0" step="10">
                     <span id="2roues-valeur">0</span>
-                    <label for="2roues">Deplacement 2 roues (km/an)</label>
+                    <label for="2roues">km/an : Déplacement 2 roues</label>
                 </div>
 
                 <div class="form-line">
                     <input type="range" id="Avion" name="Avion" min="0" max="20000" value="0" step="10">
                     <span id="Avion-valeur">0</span>
-                    <label for="Avion">Deplacement avion (km/an)</label>
+                    <label for="Avion">km/an : Déplacement avion</label>
                 </div>
 
 
@@ -107,7 +107,7 @@
 
                 <div class="form-line">
                     <input type="checkbox" id="fusionner" name="fusionner">
-                    <label for="fusionner">Fusionner categories</label>
+                    <label for="fusionner">Fusionner catégories</label>
                 </div>
 
             </form>

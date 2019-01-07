@@ -217,7 +217,7 @@ function handleSlider(sliderName) {
     "1.09" : "E",
     "1.18" : "F",
     "1.27" : "G"
-  }
+  };
 
   let $span = $(`#${sliderName}-valeur`);
   if (sliderName === "Chauffage" || sliderName === "Électroménager" || sliderName === "ChauffageEau") {
@@ -345,7 +345,7 @@ function drawLegend (keys) {
   keys = [...keys].reverse();
   const legend = svg.append('g')
     .attr('class', 'legend')
-    .attr('transform', `translate(${width - 250}, 0)`);
+    .attr('transform', `translate(${width - 250}, 50)`);
 
   legend.selectAll('line')
     .data(['Objectif COP21 (4200 kg CO2/an)'])
