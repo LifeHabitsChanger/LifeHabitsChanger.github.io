@@ -61,3 +61,11 @@ h1 {
 #regime {
     padding-left:15px;
 }
+
+.axis.x {
+    font-size: 28px;
+}
+
+.axis.y {
+    font-size: 20px;
+}

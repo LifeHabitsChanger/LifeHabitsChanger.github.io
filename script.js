@@ -1,5 +1,5 @@
 // Dimensions of the SVG
-const margin = {top: 20, right: 20, bottom: 70, left: 40};
+const margin = {top: 20, right: 20, bottom: 70, left: 100};
 const width = 1000 - margin.left - margin.right;
 const height = 600 - margin.top - margin.bottom;
 
@@ -104,7 +104,7 @@ const z = d3.scaleOrdinal()
             "#87CEEB", // Avion
 
             "#6B8E23", // Chauffage
-            "#9ACD32", // Eau chaude 
+            "#9ACD32", // Eau chaude
             "#008000", // Electromenager
 
             "#CD5C5C", // Alimentaire
@@ -393,7 +393,7 @@ function mapRawToCO2(value, i, column) {
   let coefMangerLocal = (i === 0)? 1 : ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1;;
   let consoBaseElectromenager = (i === 0)? 1100 : ((document.getElementById("debrancherAppareils").checked) === true)? 800 : 1100;;
   let consoChauffeEau = (i === 0)? 800 : ((document.getElementById("douche").checked) === true)? 400 : 800;;
-  
+
   const fcts = {
     'Train': (val) => val * 0.028,
     'Voiture': (val) => val * 0.131,
@@ -413,7 +413,7 @@ function mapRawToCO2(value, i, column) {
     "Électroménager": (val) => (val * consoBaseElectromenager * kwHtoCO2)/ nbHab ,
     "ChauffageEau": (val) => val * consoChauffeEau * kwHtoCO2
   };
-  
+
   return fcts[column](value);
 }
 
