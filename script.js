@@ -298,8 +298,6 @@ function draw (data) {
         tooltip.select("text").text(txt);
       });
 
-  // FIXME: label dans les rect
-
   // Draw the X Axis
   svg.append('g')
     .attr('class', 'x axis')
@@ -310,6 +308,14 @@ function draw (data) {
   svg.append('g')
     .attr('class', 'y axis')
     .call(yAxis);
+
+  svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height / 2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Emission d'équivalent C02 (kg/an)");
 
   // Threshold (objective of 4200 of CO2 / year)
   svg.append('line')
