@@ -18,7 +18,7 @@ const svg = d3.select("#chart")
 // This data is not to be displayed (need processing first)
 // We will change this data using the form
 let orig_data = [
-  {
+  { // Francais moyen
     "serie": "Moyenne français",
     "Boeuf, agneau": "0.75",
     "Poulet, poisson, porc": "0.35",
@@ -38,7 +38,7 @@ let orig_data = [
     "Électroménager": "1",
     "ChauffageEau": "1"
   },
-  {
+  { // Moi
     "serie": "Moi",
     "Boeuf, agneau": "0.75",
     "Poulet, poisson, porc": "0.35",
@@ -57,10 +57,112 @@ let orig_data = [
     "Chauffage": "1",
     "Électroménager": "1",
     "ChauffageEau": "1"
+  },
+  { // Francais fortuné
+    "serie": "Fortuné",
+    "Boeuf, agneau": "0.75",
+    "Poulet, poisson, porc": "0.35",
+    "Produits laitiers": "0.4",
+    "Céréales, pain": "0.3",
+    "Légumes": "0.15",
+    "Fruits": "0.2",
+    "Huile, margarine": "0.2",
+    "En-cas, sucre": "0.05",
+    "Boisson": "0.2",
+    "Train": "0",
+    "Voiture": "10000",
+    "Bus": "0",
+    "2roues": "0",
+    "Avion": "15000",
+    "Chauffage": "0.82",
+    "Électroménager": "0.82",
+    "ChauffageEau": "0.82"
+  },
+  { // Francais infortuné
+    "serie": "Infortuné",
+    "Boeuf, agneau": "0.75",
+    "Poulet, poisson, porc": "0.35",
+    "Produits laitiers": "0.4",
+    "Céréales, pain": "0.3",
+    "Légumes": "0.15",
+    "Fruits": "0.2",
+    "Huile, margarine": "0.2",
+    "En-cas, sucre": "0.05",
+    "Boisson": "0.2",
+    "Train": "1000",
+    "Voiture": "0",
+    "Bus": "6000",
+    "2roues": "3000",
+    "Avion": "0",
+    "Chauffage": "1.18",
+    "Électroménager": "1.18",
+    "ChauffageEau": "1.18"
+  },
+  { // Français écologiste
+    "serie": "Écologiste",
+    "Boeuf, agneau": "0",
+    "Poulet, poisson, porc": "0",
+    "Produits laitiers": "0.3",
+    "Céréales, pain": "0.5",
+    "Légumes": "0.25",
+    "Fruits": "0.3",
+    "Huile, margarine": "0.1",
+    "En-cas, sucre": "0.05",
+    "Boisson": "0.2",
+    "Train": "10000",
+    "Voiture": "1000",
+    "Bus": "2000",
+    "2roues": "0",
+    "Avion": "0",
+    "Chauffage": "0.73",
+    "Électroménager": "0.73",
+    "ChauffageEau": "0.73"
+  }];
+
+let extra_data = [
+  {
+    "serie": "Moyenne français",
+    "Surface": "91",
+    "nbHabitant":"2.31",
+    "mangerLocal":"false",
+    "debrancherAppareils":"false",
+    "douche":"false"
+  },
+  {
+    "serie": "Moi",
+    "Surface": "91",
+    "nbHabitant":"2.31",
+    "mangerLocal":"false",
+    "debrancherAppareils":"false",
+    "douche":"false"
+  },
+  {
+    "serie": "Fortuné",
+    "Surface": "200",
+    "nbHabitant":"2",
+    "mangerLocal":"false",
+    "debrancherAppareils":"false",
+    "douche":"false"
+  },
+  {
+    "serie": "Infortuné",
+    "Surface": "46",
+    "nbHabitant":"5",
+    "mangerLocal":"false",
+    "debrancherAppareils":"false",
+    "douche":"false"
+  },
+  {
+    "serie": "Écologiste",
+    "Surface": "50",
+    "nbHabitant":"2",
+    "mangerLocal":"true",
+    "debrancherAppareils":"true",
+    "douche":"true"
   }];
 
 orig_data.columns = Object.keys(orig_data[0]);
-
+extra_data.columns = Object.keys(extra_data[0]);
 
 // Transform the data (raw value => kg of CO2 / year)
 let data = processData(orig_data);
@@ -394,11 +496,17 @@ function drawLegend (keys) {
 function mapRawToCO2(value, i, column) {
 
   let kwHtoCO2 = 0.44;
-  let surfaceValeur = (i === 0)? 91 : $(`#surface`).val();
-  let nbHab = (i === 0)? 2.31 :$(`#nbHabitant-valeur`).text();
-  let coefMangerLocal = (i === 0)? 1 : ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1;;
-  let consoBaseElectromenager = (i === 0)? 1100 : ((document.getElementById("debrancherAppareils").checked) === true)? 800 : 1100;;
-  let consoChauffeEau = (i === 0)? 800 : ((document.getElementById("douche").checked) === true)? 400 : 800;;
+  let surfaceValeur = (i === 1)? $(`#surface`).val() : extra_data[i]["Surface"];
+  let nbHab = (i === 1)? $(`#nbHabitant-valeur`).text() : extra_data[i]["nbHabitant"];
+  let coefMangerLocal = (i === 1)? 
+    ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1: 
+    (extra_data[i]["mangerLocal"] === "true")? 0.9 : 1;
+  let consoBaseElectromenager = (i === 1)? 
+    ((document.getElementById("debrancherAppareils").checked) === true)? 800 : 1100 :
+    (extra_data[i]["debrancherAppareils"] === "true")? 800 : 1100;
+  let consoChauffeEau = (i === 1)? 
+    ((document.getElementById("douche").checked) === true)? 400 : 800 :
+    (extra_data[i]["douche"] === "true")? 400 : 800;
 
   const fcts = {
     'Train': (val) => val * 0.028,
