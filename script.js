@@ -354,6 +354,7 @@ function drawTooltip () {
 // Draw the legend (color + name of the category)
 function drawLegend (keys) {
   keys = [...keys].reverse();
+  let y_values = [0, 36, 54, 72, 108, 126, 144, 162, 180, 216, 234, 252, 270, 288, 306, 324, 342, 360];
   const legend = svg.append('g')
     .attr('class', 'legend')
     .attr('transform', `translate(${width - 250}, 50)`);
@@ -373,7 +374,7 @@ function drawLegend (keys) {
     .enter()
     .append('rect')
     .attr('x', 0)
-    .attr('y', (d, i) => (i+1) * 18 )
+    .attr('y', (d, i) => y_values[i+1] )
     .attr('width', 12)
     .attr('height', 12)
     .attr('fill', (d) => z(d) );
@@ -384,7 +385,7 @@ function drawLegend (keys) {
     .append('text')
     .text( (d) => d )
     .attr('x', 18)
-    .attr('y', (d, i) => (i * 18) + 6 )
+    .attr('y', (d, i) => y_values[i] + 6 )
     .attr('text-anchor', 'start')
     .attr('dominant-baseline', 'middle');
 }
