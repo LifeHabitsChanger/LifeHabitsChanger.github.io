@@ -19,7 +19,7 @@ const svg = d3.select("#chart")
 // We will change this data using the form
 let orig_data = [
   { // Francais moyen
-    "serie": "Moyenne français",
+    "serie": "Français moyen",
     "Boeuf, agneau": "0.75",
     "Poulet, poisson, porc": "0.35",
     "Produits laitiers": "0.4",
@@ -121,7 +121,7 @@ let orig_data = [
 
 let extra_data = [
   {
-    "serie": "Moyenne français",
+    "serie": "Français moyen",
     "Surface": "91",
     "nbHabitant":"2.31",
     "mangerLocal":"false",
@@ -150,7 +150,7 @@ let extra_data = [
     "nbHabitant":"5",
     "mangerLocal":"false",
     "debrancherAppareils":"false",
-    "douche":"false"
+    "douche":"true"
   },
   {
     "serie": "Écologiste",
