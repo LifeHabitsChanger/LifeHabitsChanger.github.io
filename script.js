@@ -13,6 +13,8 @@ const svg = d3.select("#chart")
   .attr("transform", `translate(${margin.left}, ${margin.top})`)
   .style("text-align", "center");
 
+// Emplacement de "Moi" dans orig_data et extra_data
+let moi = 4;
 
 // Raw data (e.g. with kilometers or kilograms)
 // This data is not to be displayed (need processing first)
@@ -20,26 +22,6 @@ const svg = d3.select("#chart")
 let orig_data = [
   { // Francais moyen
     "serie": "Français moyen",
-    "Boeuf, agneau": "0.75",
-    "Poulet, poisson, porc": "0.35",
-    "Produits laitiers": "0.4",
-    "Céréales, pain": "0.3",
-    "Légumes": "0.15",
-    "Fruits": "0.2",
-    "Huile, margarine": "0.2",
-    "En-cas, sucre": "0.05",
-    "Boisson": "0.2",
-    "Train": "1540",
-    "Voiture": "11119",
-    "Bus": "1226",
-    "2roues": "188",
-    "Avion": "209",
-    "Chauffage": "1",
-    "Électroménager": "1",
-    "ChauffageEau": "1"
-  },
-  { // Moi
-    "serie": "Moi",
     "Boeuf, agneau": "0.75",
     "Poulet, poisson, porc": "0.35",
     "Produits laitiers": "0.4",
@@ -117,19 +99,31 @@ let orig_data = [
     "Chauffage": "0.73",
     "Électroménager": "0.73",
     "ChauffageEau": "0.73"
+  },
+  { // Moi
+    "serie": "Moi",
+    "Boeuf, agneau": "0.75",
+    "Poulet, poisson, porc": "0.35",
+    "Produits laitiers": "0.4",
+    "Céréales, pain": "0.3",
+    "Légumes": "0.15",
+    "Fruits": "0.2",
+    "Huile, margarine": "0.2",
+    "En-cas, sucre": "0.05",
+    "Boisson": "0.2",
+    "Train": "1540",
+    "Voiture": "11119",
+    "Bus": "1226",
+    "2roues": "188",
+    "Avion": "209",
+    "Chauffage": "1",
+    "Électroménager": "1",
+    "ChauffageEau": "1"
   }];
 
 let extra_data = [
   {
     "serie": "Français moyen",
-    "Surface": "91",
-    "nbHabitant":"2.31",
-    "mangerLocal":"false",
-    "debrancherAppareils":"false",
-    "douche":"false"
-  },
-  {
-    "serie": "Moi",
     "Surface": "91",
     "nbHabitant":"2.31",
     "mangerLocal":"false",
@@ -159,7 +153,15 @@ let extra_data = [
     "mangerLocal":"true",
     "debrancherAppareils":"true",
     "douche":"true"
-  }];
+  },
+  {
+    "serie": "Moi",
+    "Surface": "91",
+    "nbHabitant":"2.31",
+    "mangerLocal":"false",
+    "debrancherAppareils":"false",
+    "douche":"false"
+  },];
 
 orig_data.columns = Object.keys(orig_data[0]);
 extra_data.columns = Object.keys(extra_data[0]);
@@ -170,7 +172,7 @@ let data = processData(orig_data);
 
 // We have 2 representations, so we retain the 2 sets of keys
 const keysNotMerged = data.columns.slice(1);
-const keysMerged = ['Alimentaire', 'Transport', 'Energie'];
+const keysMerged = ['Alimentaire', 'Transport', 'Énergie'];
 let keys = keysNotMerged;
 
 
@@ -211,7 +213,7 @@ const z = d3.scaleOrdinal()
 
             "#CD5C5C", // Alimentaire
             "#4169E1", // Transports
-            "#3CB371"  // Energie
+            "#3CB371"  // Énergie
            ])
     .domain([...keysNotMerged, ...keysMerged]);
 
@@ -256,59 +258,59 @@ function handleAlimentaire(val)
 {
   switch($alim.val()){
     case "Beaucoup de viande":
-      orig_data[1]["Boeuf, agneau"] = 1.5;
-      orig_data[1]["Poulet, poisson, porc"] = 0.4;
-      orig_data[1]["Produits laitiers"] = 0.5;
-      orig_data[1]["Céréales, pain"] = 0.2;
-      orig_data[1]["Légumes"] = 0.1;
-      orig_data[1]["Fruits"] = 0.1;
-      orig_data[1]["Huile, margarine"] = 0.25;
-      orig_data[1]["En-cas, sucre"] = 0.05;
-      orig_data[1]["Boisson"] = 0.2;
+      orig_data[moi]["Boeuf, agneau"] = 1.5;
+      orig_data[moi]["Poulet, poisson, porc"] = 0.4;
+      orig_data[moi]["Produits laitiers"] = 0.5;
+      orig_data[moi]["Céréales, pain"] = 0.2;
+      orig_data[moi]["Légumes"] = 0.1;
+      orig_data[moi]["Fruits"] = 0.1;
+      orig_data[moi]["Huile, margarine"] = 0.25;
+      orig_data[moi]["En-cas, sucre"] = 0.05;
+      orig_data[moi]["Boisson"] = 0.2;
       break;
     case "Moyen":
-      orig_data[1]["Boeuf, agneau"] = 0.75;
-      orig_data[1]["Poulet, poisson, porc"] = 0.35;
-      orig_data[1]["Produits laitiers"] = 0.4;
-      orig_data[1]["Céréales, pain"] = 0.3;
-      orig_data[1]["Légumes"] = 0.15;
-      orig_data[1]["Fruits"] = 0.2;
-      orig_data[1]["Huile, margarine"] = 0.2;
-      orig_data[1]["En-cas, sucre"] = 0.05;
-      orig_data[1]["Boisson"] = 0.2;
+      orig_data[moi]["Boeuf, agneau"] = 0.75;
+      orig_data[moi]["Poulet, poisson, porc"] = 0.35;
+      orig_data[moi]["Produits laitiers"] = 0.4;
+      orig_data[moi]["Céréales, pain"] = 0.3;
+      orig_data[moi]["Légumes"] = 0.15;
+      orig_data[moi]["Fruits"] = 0.2;
+      orig_data[moi]["Huile, margarine"] = 0.2;
+      orig_data[moi]["En-cas, sucre"] = 0.05;
+      orig_data[moi]["Boisson"] = 0.2;
       break;
     case "Sans boeuf":
-      orig_data[1]["Boeuf, agneau"] = 0;
-      orig_data[1]["Poulet, poisson, porc"] = 0.5;
-      orig_data[1]["Produits laitiers"] = 0.4;
-      orig_data[1]["Céréales, pain"] = 0.3;
-      orig_data[1]["Légumes"] = 0.15;
-      orig_data[1]["Fruits"] = 0.2;
-      orig_data[1]["Huile, margarine"] = 0.2;
-      orig_data[1]["En-cas, sucre"] = 0.05;
-      orig_data[1]["Boisson"] = 0.2;
+      orig_data[moi]["Boeuf, agneau"] = 0;
+      orig_data[moi]["Poulet, poisson, porc"] = 0.5;
+      orig_data[moi]["Produits laitiers"] = 0.4;
+      orig_data[moi]["Céréales, pain"] = 0.3;
+      orig_data[moi]["Légumes"] = 0.15;
+      orig_data[moi]["Fruits"] = 0.2;
+      orig_data[moi]["Huile, margarine"] = 0.2;
+      orig_data[moi]["En-cas, sucre"] = 0.05;
+      orig_data[moi]["Boisson"] = 0.2;
       break;
     case "Végétarien":
-      orig_data[1]["Boeuf, agneau"] = 0;
-      orig_data[1]["Poulet, poisson, porc"] = 0;
-      orig_data[1]["Produits laitiers"] = 0.3;
-      orig_data[1]["Céréales, pain"] = 0.5;
-      orig_data[1]["Légumes"] = 0.25;
-      orig_data[1]["Fruits"] = 0.3;
-      orig_data[1]["Huile, margarine"] = 0.1;
-      orig_data[1]["En-cas, sucre"] = 0.05;
-      orig_data[1]["Boisson"] = 0.2;
+      orig_data[moi]["Boeuf, agneau"] = 0;
+      orig_data[moi]["Poulet, poisson, porc"] = 0;
+      orig_data[moi]["Produits laitiers"] = 0.3;
+      orig_data[moi]["Céréales, pain"] = 0.5;
+      orig_data[moi]["Légumes"] = 0.25;
+      orig_data[moi]["Fruits"] = 0.3;
+      orig_data[moi]["Huile, margarine"] = 0.1;
+      orig_data[moi]["En-cas, sucre"] = 0.05;
+      orig_data[moi]["Boisson"] = 0.2;
       break;
     case "Végan":
-      orig_data[1]["Boeuf, agneau"] = 0;
-      orig_data[1]["Poulet, poisson, porc"] = 0;
-      orig_data[1]["Produits laitiers"] = 0;
-      orig_data[1]["Céréales, pain"] = 0.55;
-      orig_data[1]["Légumes"] = 0.25;
-      orig_data[1]["Fruits"] = 0.3;
-      orig_data[1]["Huile, margarine"] = 0.15;
-      orig_data[1]["En-cas, sucre"] = 0.05;
-      orig_data[1]["Boisson"] = 0.2;
+      orig_data[moi]["Boeuf, agneau"] = 0;
+      orig_data[moi]["Poulet, poisson, porc"] = 0;
+      orig_data[moi]["Produits laitiers"] = 0;
+      orig_data[moi]["Céréales, pain"] = 0.55;
+      orig_data[moi]["Légumes"] = 0.25;
+      orig_data[moi]["Fruits"] = 0.3;
+      orig_data[moi]["Huile, margarine"] = 0.15;
+      orig_data[moi]["En-cas, sucre"] = 0.05;
+      orig_data[moi]["Boisson"] = 0.2;
       break;
   }
   update()
@@ -328,9 +330,9 @@ function handleSlider(sliderName) {
 
   let $span = $(`#${sliderName}-valeur`);
   if (sliderName === "Chauffage" || sliderName === "Électroménager" || sliderName === "ChauffageEau") {
-    $span.text(energyValToClass[orig_data[1][sliderName] + ""]);
+    $span.text(energyValToClass[orig_data[moi][sliderName] + ""]);
   } else {
-    $span.text(orig_data[1][sliderName]);
+    $span.text(orig_data[moi][sliderName]);
   }
 
   let $slider = $(`#${sliderName}`);
@@ -340,7 +342,7 @@ function handleSlider(sliderName) {
   } else if (sliderName === "surface") {
     $slider.val(91);
   } else {
-    $slider.val(orig_data[1][sliderName]);
+    $slider.val(orig_data[moi][sliderName]);
   }
 
   $slider.on('input', function () {
@@ -350,7 +352,7 @@ function handleSlider(sliderName) {
     } else {
       $span.text(newValue);
     }
-    orig_data[1][sliderName] = (+newValue);
+    orig_data[moi][sliderName] = (+newValue);
     update();
   });
 }
@@ -496,16 +498,17 @@ function drawLegend (keys) {
 // Returns the equivalent in kg of CO2 / year for a given raw value
 function mapRawToCO2(value, i, column) {
 
+
   let kwHtoCO2 = 0.44;
-  let surfaceValeur = (i === 1)? $(`#surface`).val() : extra_data[i]["Surface"];
-  let nbHab = (i === 1)? $(`#nbHabitant-valeur`).text() : extra_data[i]["nbHabitant"];
-  let coefMangerLocal = (i === 1)? 
+  let surfaceValeur = (i === moi)? $(`#surface`).val() : extra_data[i]["Surface"];
+  let nbHab = (i === moi)? $(`#nbHabitant-valeur`).text() : extra_data[i]["nbHabitant"];
+  let coefMangerLocal = (i === moi)? 
     ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1: 
     (extra_data[i]["mangerLocal"] === "true")? 0.9 : 1;
-  let consoBaseElectromenager = (i === 1)? 
+  let consoBaseElectromenager = (i === moi)? 
     ((document.getElementById("debrancherAppareils").checked) === true)? 800 : 1100 :
     (extra_data[i]["debrancherAppareils"] === "true")? 800 : 1100;
-  let consoChauffeEau = (i === 1)? 
+  let consoChauffeEau = (i === moi)? 
     ((document.getElementById("douche").checked) === true)? 400 : 800 :
     (extra_data[i]["douche"] === "true")? 400 : 800;
 
@@ -583,11 +586,11 @@ function processDataMerge (data) {
   let columns = {
     'Alimentaire': ['Boeuf, agneau', 'Poulet, poisson, porc', "Produits laitiers", "En-cas, sucre", 'Céréales, pain', 'Légumes', 'Fruits', 'Huile, margarine', 'Boisson'],
     'Transport': ["Train", "Voiture", "Bus", "2roues", "Avion"],
-    'Energie': ["Chauffage", "Électroménager", "ChauffageEau"],
+    'Énergie': ["Chauffage", "Électroménager", "ChauffageEau"],
   };
 
   let data2 = [];
-  data2.columns = ['Alimentaire', 'Transport', 'Energie'];
+  data2.columns = ['Alimentaire', 'Transport', 'Énergie'];
   for (let i = 0; i < data.length; ++i) {
     data2[i] = processDataMergeSerie(data[i], i, columns);
   }
