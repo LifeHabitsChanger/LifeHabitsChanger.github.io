@@ -257,7 +257,7 @@ $("#stereotype").on('change', () => {
     });
     elts = ["Surface"];
     elts.forEach( (sliderName) => {
-        let $slider = $("surface");
+        let $slider = $("#surface");
         $slider.val(extra_data[moi][sliderName]).trigger('input');
     })
     elts = ["mangerLocal", "debrancherAppareils", "douche"];
