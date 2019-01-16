@@ -1,0 +1,78 @@
+
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <style>
+            table {
+                border-collapse: collapse;
+                border: 2px black solid;
+                font: 12px sans-serif;
+            }
+
+            td {
+                border: 1px black solid;
+                padding: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        
+        <a href="https://lifehabitschanger.github.io/">Revenir à la visualisation</a>
+        
+        <div>Bien que nous ayons croisé les sources au mieux, la précision du modèle reste relative. Certaines valeurs changent significativement d'une source à l'autre.</div>
+        <div>Voici comment nous estimons vos émissions de gaz à effet de serre :</div>
+        <div>Pour l'<b>alimentaire</b>, nous avons pour chaque profil type (moyen, végétarien...) l'équivalent CO2 en tonne à l'année. Les valeurs des sous catégories se trouvet dans le second tableau.</div>
+        <div>Pour les <b>transports</b>, la consommation moyenne est en km à l'année. Le coefficient indique combien de kg d'équivalent CO2 est émis pour un km du transport conscerné. Ces valeurs se basent sur une estimation du nombre moyen de passagers.</div>
+        <div>Pour <b>l'énergie</b>, nous estimons la consommation énergétique à l'année en kwH en supposant que le chauffage est tout électrique. La colonne Coeff indique la formule utilisée. La consommation électique totale est  convertie en kg d'équivalent CO2 selon les valeurs européennes.</div>
+
+        <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
+        <script src="d3.min.js?v=3.2.8"></script>
+
+        <script type="text/javascript"charset="utf-8">
+            d3.text("Data.csv", function(data) {
+                var parsedCSV = d3.csv.parseRows(data);
+
+                var container = d3.select("body")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+            });
+        </script>
+
+        <script type="text/javascript"charset="utf-8">
+            d3.text("Data_alimentaire.csv", function(data) {
+                var parsedCSV = d3.csv.parseRows(data);
+
+                var container = d3.select("body")
+                    .append("table")
+
+                    .selectAll("tr")
+                        .data(parsedCSV).enter()
+                        .append("tr")
+
+                    .selectAll("td")
+                        .data(function(d) { return d; }).enter()
+                        .append("td")
+                        .text(function(d) { return d; });
+            });
+        </script>
+        
+    </body>
+</html>
