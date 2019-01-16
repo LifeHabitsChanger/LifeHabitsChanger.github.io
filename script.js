@@ -254,6 +254,9 @@ $("#stereotype").on('change', () => {
     elts.forEach( (sliderName) => {
         let $slider = $(`#${sliderName}`);
         $slider.val(extra_data[moi][sliderName]).trigger('input');
+        if (type == 0) {
+          $(`#${sliderName}-valeur`).text(2.31);
+        }
     });
     elts = ["Surface"];
     elts.forEach( (sliderName) => {
@@ -279,6 +282,10 @@ $("#stereotype").on('change', () => {
     } else if (chicken == 0 && milk == 0) {
         $alim.val("Végan");
     }
+})
+
+$("#reset").on('click', () => {
+  $("#stereotype").val("Français moyen").trigger('change');
 })
 
 // Draw the SVG
