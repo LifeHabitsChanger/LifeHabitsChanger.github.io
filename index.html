@@ -9,7 +9,7 @@
 
 
     <h1>PomClimat : Calculateur d'émission de Co2</h1>
-    
+
     <a href="./data.html">Infos et sources</a>
 
     <div id="wrapper">
@@ -23,6 +23,16 @@
             <h3>Entrez ici vos informations</h3>
 
             <form id="form">
+
+                <div class="form-line">
+                    <label for="stereotype">Profil-type : </label>
+                    <select id="stereotype" name="stereotype" size="1">
+                        <option selected="selected">Français moyen</option>
+                        <option>Fortuné</option>
+                        <option>Infortuné</option>
+                        <option>Écologiste</option>
+                    </select>
+                </div>
 
                 <h4>Énergie</h4>
 
@@ -91,7 +101,7 @@
                 <div class="form-line">
                     <input type="range" id="2roues" name="2roues" min="0" max="20000" value="0" step="10">
                     <span id="2roues-valeur">0</span>
-                    <label for="2roues">km/an : Déplacement 2 roues</label>
+                    <label for="2roues">km/an : Déplacement Moto</label>
                 </div>
 
                 <div class="form-line">
@@ -130,9 +140,6 @@
         </div>
     </div>
 
-    
-
-    <!-- TODO: Mettre un DOMContentLoaded et deplacer dans le header -->
     <script src="script.js"></script>
 
 </body>

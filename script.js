@@ -34,7 +34,7 @@ let orig_data = [
     "Train": "1540",
     "Voiture": "11119",
     "Bus": "1226",
-    "2roues": "188",
+    "Moto": "188",
     "Avion": "209",
     "Chauffage": "1",
     "Électroménager": "1",
@@ -54,7 +54,7 @@ let orig_data = [
     "Train": "0",
     "Voiture": "10000",
     "Bus": "0",
-    "2roues": "0",
+    "Moto": "0",
     "Avion": "15000",
     "Chauffage": "0.82",
     "Électroménager": "0.82",
@@ -74,7 +74,7 @@ let orig_data = [
     "Train": "1000",
     "Voiture": "0",
     "Bus": "6000",
-    "2roues": "3000",
+    "Moto": "3000",
     "Avion": "0",
     "Chauffage": "1.18",
     "Électroménager": "1.18",
@@ -94,7 +94,7 @@ let orig_data = [
     "Train": "10000",
     "Voiture": "1000",
     "Bus": "2000",
-    "2roues": "0",
+    "Moto": "0",
     "Avion": "0",
     "Chauffage": "0.73",
     "Électroménager": "0.73",
@@ -114,7 +114,7 @@ let orig_data = [
     "Train": "1540",
     "Voiture": "11119",
     "Bus": "1226",
-    "2roues": "188",
+    "Moto": "188",
     "Avion": "209",
     "Chauffage": "1",
     "Électroménager": "1",
@@ -204,7 +204,7 @@ const z = d3.scaleOrdinal()
             "#6495ED", // Train
             "#4169E1", // Voiture
             "#B0E0E6", // Bus
-            "#4682B4", // 2roues
+            "#4682B4", // Moto
             "#87CEEB", // Avion
 
             "#6B8E23", // Chauffage
@@ -236,6 +236,44 @@ $alim.on('change', (val) => handleAlimentaire(val) );
 $("#mangerLocal").on('change', (val) => update() );
 $("#debrancherAppareils").on('change', (val) => update() );
 $("#douche").on('change', (val) => update() );
+
+$("#stereotype").on('change', () => {
+    let type = $("#stereotype").prop('selectedIndex');
+    orig_data[moi] = { ...orig_data[type], serie: 'Moi' };
+    extra_data[moi] = { ...extra_data[type], serie: 'Moi' };
+    // Re-draw the graph
+    update();
+
+    // Update the form based on the new values
+    let elts = ["Chauffage", "Électroménager", "ChauffageEau", "Train", "Voiture", "Bus", "Moto", "Avion"];
+    elts.forEach( (sliderName) => {
+        let $slider = $(`#${sliderName}`);
+        $slider.val(orig_data[moi][sliderName]);
+    });
+    elts = ["nbHabitant", "Surface"];
+    elts.forEach( (sliderName) => {
+        let $slider = $(`#${sliderName}`);
+        $slider.val(extra_data[moi][sliderName]);
+    });
+    elts = ["mangerLocal", "debrancherAppareils", "douche"];
+    elts.forEach( (checkboxName) => {
+        let $checkbox = $(`#${checkboxName}`);
+        $checkbox.prop('checked', extra_data[moi][checkboxName]);
+    });
+    let chicken = orig_data[moi]["Poulet, poisson, porc"];
+    let milk = orig_data[moi]["Produits laitiers"];
+    if (chicken === 0.4 && milk === 0.5) {
+        $alim.val(0).change();
+    } else if (chicken === 0.35 && milk === 0.4) {
+        $alim.val(1).change();
+    } else if (chicken === 0.5 && milk === 0.4) {
+        $alim.val(2).change();
+    } else if (chicken === 0 && milk === 0.3) {
+        $alim.val(3).change();
+    } else if (chicken === 0 && milk === 0) {
+        $alim.val(4).change();
+    }
+})
 
 // Draw the SVG
 const bars = draw(data);
@@ -502,13 +540,13 @@ function mapRawToCO2(value, i, column) {
   let kwHtoCO2 = 0.44;
   let surfaceValeur = (i === moi)? $(`#surface`).val() : extra_data[i]["Surface"];
   let nbHab = (i === moi)? $(`#nbHabitant-valeur`).text() : extra_data[i]["nbHabitant"];
-  let coefMangerLocal = (i === moi)? 
-    ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1: 
+  let coefMangerLocal = (i === moi)?
+    ((document.getElementById("mangerLocal").checked) === true)? 0.9 : 1:
     (extra_data[i]["mangerLocal"] === "true")? 0.9 : 1;
-  let consoBaseElectromenager = (i === moi)? 
+  let consoBaseElectromenager = (i === moi)?
     ((document.getElementById("debrancherAppareils").checked) === true)? 800 : 1100 :
     (extra_data[i]["debrancherAppareils"] === "true")? 800 : 1100;
-  let consoChauffeEau = (i === moi)? 
+  let consoChauffeEau = (i === moi)?
     ((document.getElementById("douche").checked) === true)? 400 : 800 :
     (extra_data[i]["douche"] === "true")? 400 : 800;
 
@@ -516,7 +554,7 @@ function mapRawToCO2(value, i, column) {
     'Train': (val) => val * 0.028,
     'Voiture': (val) => val * 0.131,
     'Bus': (val) => val * 0.130,
-    '2roues': (val) => val * 0.117,
+    'Moto': (val) => val * 0.117,
     'Avion': (val) => val * 0.131,
     "Boeuf, agneau": (val) => val * 1000 * coefMangerLocal,
     "Poulet, poisson, porc": (val) => val * 1000 * coefMangerLocal,
@@ -585,7 +623,7 @@ function processDataMergeSerie (d, i, columns) {
 function processDataMerge (data) {
   let columns = {
     'Alimentaire': ['Boeuf, agneau', 'Poulet, poisson, porc', "Produits laitiers", "En-cas, sucre", 'Céréales, pain', 'Légumes', 'Fruits', 'Huile, margarine', 'Boisson'],
-    'Transport': ["Train", "Voiture", "Bus", "2roues", "Avion"],
+    'Transport': ["Train", "Voiture", "Bus", "Moto", "Avion"],
     'Énergie': ["Chauffage", "Électroménager", "ChauffageEau"],
   };
 
