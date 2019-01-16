@@ -248,17 +248,18 @@ $("#stereotype").on('change', () => {
     let elts = ["Chauffage", "Électroménager", "ChauffageEau", "Train", "Voiture", "Bus", "Moto", "Avion"];
     elts.forEach( (sliderName) => {
         let $slider = $(`#${sliderName}`);
-        $slider.val(orig_data[moi][sliderName]);
+        $slider.val(orig_data[moi][sliderName]).change();
     });
     elts = ["nbHabitant", "Surface"];
     elts.forEach( (sliderName) => {
         let $slider = $(`#${sliderName}`);
-        $slider.val(extra_data[moi][sliderName]);
+        $slider.val(extra_data[moi][sliderName]).change();
     });
     elts = ["mangerLocal", "debrancherAppareils", "douche"];
     elts.forEach( (checkboxName) => {
         let $checkbox = $(`#${checkboxName}`);
-        $checkbox.prop('checked', extra_data[moi][checkboxName]);
+        let val = extra_data[moi][checkboxName] === "true";
+        $checkbox.prop('checked', val).change();
     });
     let chicken = orig_data[moi]["Poulet, poisson, porc"];
     let milk = orig_data[moi]["Produits laitiers"];
