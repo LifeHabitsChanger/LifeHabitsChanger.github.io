@@ -42,8 +42,8 @@ Renseigner les transports en km/an n'est pas idéal.
 ### Liens
 
 
-![Le projet](https://lifehabitschanger.github.io/)
-![Les données](https://github.com/LifeHabitsChanger/lifehabitschanger.github.io/blob/master/Data.csv)
-![Le detail des données alimentaires](https://github.com/LifeHabitsChanger/lifehabitschanger.github.io/blob/master/Data_alimentaire.csv)
+[Le projet](https://lifehabitschanger.github.io/)
+[Les données](https://github.com/LifeHabitsChanger/lifehabitschanger.github.io/blob/master/Data.csv)
+[Le detail des données alimentaires](https://github.com/LifeHabitsChanger/lifehabitschanger.github.io/blob/master/Data_alimentaire.csv)
 
 La majorité des sources utilisées pour mettre en place le modèle sont consultables dans le fichier Data.csv présent dans cette archive
