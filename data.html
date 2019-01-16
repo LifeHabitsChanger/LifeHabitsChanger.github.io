@@ -54,7 +54,7 @@
             d3.text("Data.csv", function(data) {
                 var parsedCSV = d3.csv.parseRows(data);
 
-                var container = d3.select("#tab1").node()
+                var container = d3.select("#tab1")
                     .append("table")
 
                     .selectAll("tr")
@@ -71,7 +71,7 @@
             d3.text("Data_alimentaire.csv", function(data) {
                 var parsedCSV = d3.csv.parseRows(data);
 
-                var container = d3.select("#tab2").node()
+                var container = d3.select("#tab2")
                     .append("table")
 
                     .selectAll("tr")
