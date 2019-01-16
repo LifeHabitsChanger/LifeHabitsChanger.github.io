@@ -41,7 +41,11 @@
         <p>
           <b>Auteurs</b> : Pascal Busac, Rémy Chaput, Théo Vergne, Pierre Yang
         </p>
+        
+        <h4>Production de CO2 par type d'activité (en tonne) : <h4>
         <div id="tab1"></div>
+        <br/>
+        <h4>Détail alimentaire de production de CO2 (en tonne) : <h4>
         <div id="tab2"></div>
         <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
         <script src="d3.min.js?v=3.2.8"></script>
@@ -63,7 +67,6 @@
                         .text(function(d) { return d; });
             });
         </script>
-
         <script type="text/javascript"charset="utf-8">
             d3.text("Data_alimentaire.csv", function(data) {
                 var parsedCSV = d3.csv.parseRows(data);
