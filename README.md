@@ -10,14 +10,16 @@
 
 Ce projet a été réalisé dans le cadre de l'UE Data Visualization du master d'IA de l'université Claude Bernard Lyon 1.
 
-Cette visualisation présente l'empreinte carbone de différentes actions du quotidien (alimentaire, transports, énergétique). Un formulaire, pré remplit avec les données moyennes française, est modifiable. Nous vous invitone à renseigner les données vous concernant pour avoir une estimation de vos émissions de gaz à effet de serre. Jouer avec les différents paramètres donne une idée de l'impact des différents éléments.
+Cette visualisation permet d'observer l'empreinte carbone de nos choix et habitudes de vie, d'un niveau individuel. Nous partons du principe que le réchauffement climatique est un fait, et est (en partie) causé par trop d'émission de gaz à effet de serre, notamment le CO2. Nous souhaitons donc sensibiliser et informer les citoyens, en permettant à la fois de calculer son émission de CO2 personnelle (en fonction de plusieurs critères, comme l'alimentation, le transport, le chauffage, ...), mais également de simuler différents scénarios et d'observer l'impact d'une modification d'une habitude (si je mange moins de boeuf, je pourrais éviter l'émission de X kg de CO2). Un objectif secondaire est de simuler des modifications d'habitude afin d'atteindre l'objectif de la COP21.
+
+Nous vous invitons à renseigner les données vous concernant pour avoir une estimation de vos émissions de gaz à effet de serre. Jouer avec les différents paramètres donne une idée de l'impact des différents éléments.
 
 ### Choix des visualisations
 
-Nous avons choisi de présenter les données sous forme de Barshart afin de visualiser directement la somme totale calculée.
+Nous avons choisi de présenter les données sous forme de Stacked Bar Chart afin de visualiser directement la somme totale calculée.
 Grace aux différentes catégories indiquées, l’utilisateur peut directement comprendre la part de chacune.   
 En utilisant le questionnaire, il peut explorer les impacts des différents éléments.
-Les autres barsharp lui permettent de se comparer avec des profils spécifiques (français moyens, végan...).  
+Les autres colonnes du Bar Chart lui permettent de se comparer avec des profils spécifiques (français moyens, végan...).  
 De plus, La représentation sous forme de droite de l’objectif de la cop 21 permet de savoir immédiatement si celui-ci est atteint en fonction des choix indiqués dans le questionnaire. 
 
 ### Limites
