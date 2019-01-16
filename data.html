@@ -28,20 +28,24 @@
     <body style="margin: 20px 20px 20px 20px">
         
         <div><a href="./index.html">Revenir à la visualisation</a></div>
-        <br>
-        <div>Bien que nous ayons croisé les sources au mieux, la précision du modèle reste relative : certaines valeurs changent significativement d'une source à l'autre et le formulaire reste minimaliste et incomplet. Malgré ces limites, les données restent assez proche de la réalité et vous permettent d'avoir une vue d'ensemble de votre empreinte écologique.</div>
-        <br>
-        <div>Voici comment nous estimons vos émissions de gaz à effet de serre :</div>
-        <br>
-        <div>Pour la catégorie <b>Alimentaire</b>, nous avons pour chaque profil type (moyen, végétarien...) une estimation des émissions d'équivalent CO2 à l'année. Ces valeurs sont indiquées en tonne dans la colonne "Coeff" ci-dessous. Les valeurs des différents type d'aliments se trouvent dans le second tableau.</div>
-        <br>
-        <div>Pour la catégorie <b>Transports</b>, la colonne "Conso francais moyen" représente le nombre de km moyen parcourus par un français en une année. La colonne "Coeff" indique combien de kg d'équivalent CO2 est émis pour un kilomètre parcouru par le transport concerné. Ces valeurs se basent sur une estimation du nombre moyen de passagers par mode de transport.</div>
-        <br>
-        <div>Pour la catégorie <b>Énergie</b>, nous estimons votre consommation énergétique à l'année en kWh en supposant que le chauffage est tout électrique. La colonne "Coeff" indique les formules utilisées. La consommation électique totale est convertie en kg d'équivalent CO2 selon les valeurs européennes (1kWh -> 0.44 kg équivalent CO2).</div>
-        <br>
-        <div><b>Auteurs</b> : Pascal Busac, Rémy Chaput, Théo Vergne, Pierre Yang</div>
-        <br>
+        <p> Bien que nous ayons croisé les sources au mieux, la précision du modèle reste relative : certaines valeurs changent significativement d'une source à l'autre et le formulaire reste minimaliste et incomplet. Malgré ces limites, les données restent assez proche de la réalité et vous permettent d'avoir une vue d'ensemble de votre empreinte écologique. </p>
+        
+        <p> Voici comment nous estimons vos émissions de gaz à effet de serre : 
+        
+          <p>- Pour la catégorie <b>Alimentaire</b>, nous avons pour chaque profil type (moyen, végétarien, ...) une estimation des émissions de kilogramme équivalent CO2 à l'année. Ces valeurs sont indiquées dans la colonne "Coeff" ci-dessous. Les valeurs des différents type d'aliments se trouvent dans le second tableau.</p>
+          
+          <p>- Pour la catégorie <b>Transports</b>, la colonne "Conso francais moyen" représente le nombre de km moyen parcourus par un français en une année. La colonne "Coeff" indique combien de kg d'équivalent CO2 est émis pour un kilomètre parcouru par le transport concerné. Ces valeurs se basent sur une estimation du nombre moyen de passagers par mode de transport.</p>
+          
+          <p>- Pour la catégorie <b>Énergie</b>, nous estimons votre consommation énergétique à l'année en kWh en supposant que le chauffage est tout électrique. La colonne "Coeff" indique les formules utilisées. La consommation électique totale est convertie en kg d'équivalent CO2 selon les valeurs européennes (1kWh -> 0.44 kg équivalent CO2).</p>
+        </p>
+        <p>
+          <b>Auteurs</b> : Pascal Busac, Rémy Chaput, Théo Vergne, Pierre Yang
+        </p>
+        
+        <h4>Production de CO2 par type d'activité (en kilogramme) : </h4>
         <div id="tab1"></div>
+        <br/>
+        <h4> Détail alimentaire de production de CO2 (en tonne) : </h4>
         <div id="tab2"></div>
         <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
         <script src="d3.min.js?v=3.2.8"></script>
@@ -50,7 +54,7 @@
             d3.text("Data.csv", function(data) {
                 var parsedCSV = d3.csv.parseRows(data);
 
-                var container = d3.select("body")
+                var container = d3.select("#tab1")
                     .append("table")
 
                     .selectAll("tr")
@@ -63,12 +67,11 @@
                         .text(function(d) { return d; });
             });
         </script>
-
         <script type="text/javascript"charset="utf-8">
             d3.text("Data_alimentaire.csv", function(data) {
                 var parsedCSV = d3.csv.parseRows(data);
 
-                var container = d3.select("body")
+                var container = d3.select("#tab2")
                     .append("table")
 
                     .selectAll("tr")

@@ -1,9 +1,9 @@
 Catégorie,Type,Élément,Conso francais moyen,Coeff,Source
-Alimentaire,Valeur,Beaucoup de viande,,3.3,http://shrinkthatfootprint.com/food-carbon-footprint-diet
-Alimentaire,Valeur,Moyen,,2.5,http://shrinkthatfootprint.com/food-carbon-footprint-diet
-Alimentaire,Valeur,Sans boeuf,,1.9,http://shrinkthatfootprint.com/food-carbon-footprint-diet
-Alimentaire,Valeur,Végétarien,,1.7,http://shrinkthatfootprint.com/food-carbon-footprint-diet
-Alimentaire,Valeur,Végan,,1.5,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Beaucoup de viande,,3300,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Moyen,,2500,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Sans boeuf,,1900,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Végétarien,,1700,http://shrinkthatfootprint.com/food-carbon-footprint-diet
+Alimentaire,Valeur,Végan,,1500,http://shrinkthatfootprint.com/food-carbon-footprint-diet
 Alimentaire,Coeff,Manger local,,0.9,https://ourworld.unu.edu/en/uncovering-the-carbon-footprint-of-everything
 Transports,Valeur,Train,1540,0.028,https://www.consoglobe.com/les-14-modes-de-transport-les-moins-polluants-cg
 Transports,Valeur,Voiture,11119,0.131,https://www.consoglobe.com/les-14-modes-de-transport-les-moins-polluants-cg
