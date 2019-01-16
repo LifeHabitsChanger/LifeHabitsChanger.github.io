@@ -268,16 +268,16 @@ $("#stereotype").on('change', () => {
     });
     let chicken = orig_data[moi]["Poulet, poisson, porc"];
     let milk = orig_data[moi]["Produits laitiers"];
-    if (chicken === 0.4 && milk === 0.5) {
-        $alim.val(0).change();
-    } else if (chicken === 0.35 && milk === 0.4) {
-        $alim.val(1).change();
-    } else if (chicken === 0.5 && milk === 0.4) {
-        $alim.val(2).change();
-    } else if (chicken === 0 && milk === 0.3) {
-        $alim.val(3).change();
-    } else if (chicken === 0 && milk === 0) {
-        $alim.val(4).change();
+    if (chicken == 0.4 && milk == 0.5) {
+        $alim.val("Beaucoup de viande");
+    } else if (chicken == 0.35 && milk == 0.4) {
+        $alim.val("Moyen");
+    } else if (chicken == 0.5 && milk == 0.4) {
+        $alim.val("Sans boeuf");
+    } else if (chicken == 0 && milk == 0.3) {
+        $alim.val("Végétarien");
+    } else if (chicken == 0 && milk == 0) {
+        $alim.val("Végan");
     }
 })
 
