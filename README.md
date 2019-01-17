@@ -1,8 +1,12 @@
-# LifeHabitsChanger : Calculateur d'émission de CO2 / CO2 emission calculator
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-blue.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+# LifeHabitsChanger : Calculateur d'émission de CO2 <br/> LifeHabitsChanger : CO2 emission calculator
 > BUSAC Pascal  
 > CHAPUT Rémy  
 > VERGNE Théo  
 > YANG Pierre  
+
+![Thumbnail](/img/Thumbnail.png?)
 
 ### Description (EN)
 
