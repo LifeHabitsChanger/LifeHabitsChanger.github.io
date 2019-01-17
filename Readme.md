@@ -6,7 +6,7 @@
 > VERGNE Théo  
 > YANG Pierre  
 
-![Thumbnail](/img/Thumbnail.png?)
+![Thumbnail](/thumbnail.png?)
 
 ### Description (EN)
 
