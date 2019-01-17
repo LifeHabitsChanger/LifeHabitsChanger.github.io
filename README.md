@@ -1,16 +1,22 @@
-# PomClimat : Calculateur d'émission de Co2 
+# LifeHabitsChanger : Calculateur d'émission de CO2 / CO2 emission calculator
 > BUSAC Pascal  
 > CHAPUT Rémy  
 > VERGNE Théo  
 > YANG Pierre  
 
-[M2 IA Data Visualization] Projet
+### Description (EN)
 
-### Présentation 
+This project has been realized in the course [Data Visualization](https://lyondataviz.github.io/teaching/lyon1-m2/2018/) of the [Master Artificial Intelligence](http://master-info.univ-lyon1.fr/IA/) at [University Claude Bernard Lyon 1](https://www.univ-lyon1.fr/).
 
-Ce projet a été réalisé dans le cadre de l'UE Data Visualization du master d'IA de l'université Claude Bernard Lyon 1.
+This visualization allows us to observe the carbon footprint of our choices and lifestyle, at an individual level. We assume that global warming is a fact, and is (in part) caused by too much greenhouse gas emissions, including CO2. We therefore want to raise awareness and inform citizens, by allowing both to calculate its personal CO2 emission (according to several criteria, such as food, transport, heating, ...), but also to simulate different scenarios and to observe the impact of a modification of a habit (if I ate less beef, I would avoid the emission of X kg of CO2). A secondary objective is to simulate habits changes in order to achieve the [COP21](http://www.cop21paris.org/) objective.
 
-Cette visualisation permet d'observer l'empreinte carbone de nos choix et habitudes de vie, d'un niveau individuel. Nous partons du principe que le réchauffement climatique est un fait, et est (en partie) causé par trop d'émission de gaz à effet de serre, notamment le CO2. Nous souhaitons donc sensibiliser et informer les citoyens, en permettant à la fois de calculer son émission de CO2 personnelle (en fonction de plusieurs critères, comme l'alimentation, le transport, le chauffage, ...), mais également de simuler différents scénarios et d'observer l'impact d'une modification d'une habitude (si je mange moins de boeuf, je pourrais éviter l'émission de X kg de CO2). Un objectif secondaire est de simuler des modifications d'habitude afin d'atteindre l'objectif de la COP21.
+We invite you to enter your own data to get an estimate of your greenhouse gas emissions. Playing with the different parameters gives an idea of the impact of the different elements.
+
+### Présentation (FR)  
+
+Ce projet a été réalisé dans le cadre de [l'UE Data Visualization](https://lyondataviz.github.io/teaching/lyon1-m2/2018/) du [Master 2 Intelligence Artificielle](http://master-info.univ-lyon1.fr/IA/) de [l'Université Claude Bernard Lyon 1](https://www.univ-lyon1.fr/).
+
+Cette visualisation permet d'observer l'empreinte carbone de nos choix et habitudes de vie, d'un niveau individuel. Nous partons du principe que le réchauffement climatique est un fait, et est (en partie) causé par trop d'émission de gaz à effet de serre, notamment le CO2. Nous souhaitons donc sensibiliser et informer les citoyens, en permettant à la fois de calculer son émission de CO2 personnelle (en fonction de plusieurs critères, comme l'alimentation, le transport, le chauffage, ...), mais également de simuler différents scénarios et d'observer l'impact d'une modification d'une habitude (si je mangeais moins de boeuf, je pourrais éviter l'émission de X kg de CO2). Un objectif secondaire est de simuler des modifications d'habitude afin d'atteindre l'objectif de la [COP21](https://www.apc-paris.com/cop-21).
 
 Nous vous invitons à renseigner les données vous concernant pour avoir une estimation de vos émissions de gaz à effet de serre. Jouer avec les différents paramètres donne une idée de l'impact des différents éléments.
 
@@ -40,7 +46,6 @@ Tout le monde ne connait pas la classe énergétique (A, B, .., G) de son logeme
 Renseigner les transports en km/an n'est pas idéal.
 
 ### Liens :
-
 
 [Le projet](https://lifehabitschanger.github.io/)  
 [Les données](https://github.com/LifeHabitsChanger/lifehabitschanger.github.io/blob/master/Data.csv)  
