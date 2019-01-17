@@ -7,6 +7,7 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <html lang="fr">
@@ -26,7 +27,9 @@
         </style>
     </head>
     <body style="margin: 20px 20px 20px 20px">
-        
+
+        <h1>Life Habits Changer : Infos et sources</h1>
+
         <div><a href="./index.html">Revenir à la visualisation</a></div>
         <p> Bien que nous ayons croisé les sources au mieux, la précision du modèle est relative : certaines valeurs changent significativement d'une source à l'autre et le formulaire est incomplet. Malgré ces limites, les données restent assez proche de la réalité et vous permettent d'avoir une vue d'ensemble de votre empreinte écologique. </p>
         
@@ -39,15 +42,24 @@
           <p>- Pour la catégorie <b>Énergie</b>, nous estimons la consommation électrique sur une année en kWh puis calculons la quantité de gaz à effet de serre nécessaire à sa production. Nous utilisons la valeur européenne : un kWh consommé équivaut à 0.44 kg d'équivalent CO2 émis.
             La consommation électrique est calculée à l'aide des formules indiquées dans la colonne "Coeff" pour le chauffage, l'eau chaude et l'électroménager. On suppose que le chauffage est tout électrique.</p>
         </p>
-        <p>
-          <b>Auteurs</b> : Pascal Busac, Rémy Chaput, Théo Vergne, Pierre Yang
-        </p>
+        
         
         <h4>Production de CO2 par type d'activité (en kilogramme) : </h4>
         <div id="tab1"></div>
         <br/>
         <h4> Détail alimentaire de production de CO2 (en tonne) : </h4>
         <div id="tab2"></div>
+
+        <p>
+            <a href="https://github.com/LifeHabitsChanger/lifehabitschanger.github.io"><i class="fa fa-github fa-2x"></i> Lien GitHub</a>
+
+            <p><b>Auteurs</b> : Pascal Busac, Rémy Chaput, Théo Vergne, Pierre Yang</p>
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/fr/">
+                <img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/fr/88x31.png" />
+            </a>
+            <br />Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/fr/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 3.0 France</a>.
+        </p>
+
         <!-- <script src="http://d3js.org/d3.v3.min.js"></script> -->
         <script src="d3.min.js?v=3.2.8"></script>
 
